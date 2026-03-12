@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Grimorio Prohibido Del Mal</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gveret+Levin&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div id="particulas"></div>
+
+<div class="monedas">
+💰 Monedas: <span id="monedas">0</span>
+</div>
+
+<div id="inicio">
+<h1>📖 ᎶᏒᛨᛗᛜᏒᛨᛜ ᚹᏒᛜꖾᛨƂᛨDᛜ 👻</h1>
+
+<button onclick="abrirSobre()">Abrir Sobre (10 💰)</button>
+<button onclick="verGrimorio()">Ver Grimorio</button>
+<button onclick="ganarMonedas()">Ganar monedas</button>
+</div>
+
+<div id="sobre" class="hidden">
+<h1>Abriendo Sobre</h1>
+
+<div class="container" id="cartasContainer"></div>
+
+<button onclick="abrirSobre()">Abrir otro sobre</button>
+<button onclick="volverInicio()">Volver</button>
+</div>
+
+<div id="grimorio" class="hidden">
+
+<h1>GRIMORIO PROHIBIDO</h1>
+
+<h3 id="contador"></h3>
+
+<h2>🔥 CARTAS DIOS 🔥</h2>
+<div class="container" id="grimorioDios"></div>
+
+<h2>📚 RESTO DE CARTAS</h2>
+<div class="container" id="grimorioContainer"></div>
+
+<button onclick="volverInicio()">Volver</button>
+
+</div>
+
+<div id="visorCarta" class="visor" onclick="cerrarVisor()">
+<img id="imagenGrande">
+</div>
+
+<!-- PANEL ADMIN -->
+<div id="adminPanel" class="hidden admin">
+<button onclick="reiniciarTodo()">Reset</button>
+<button onclick="salirAdmin()">Salir Admin</button>
+</div>
+
+<script src="script.js"></script>
+
+
+</body>
+</html>

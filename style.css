@@ -1,0 +1,387 @@
+body{
+margin:0;
+font-family: 'Poppins', sans-serif;
+
+background:
+linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+url("img/new_photo_fondo.jpeg");
+
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+background-attachment: fixed;
+
+color:white;
+text-align:center;
+animation: moverGalaxia 120s linear infinite;
+}
+
+h1{
+font-size:55px;
+text-shadow:0 0 25px purple;
+}
+
+button{
+padding:15px 35px;
+font-size:16px;
+background:black;
+border:3px solid magenta;
+color:white;
+cursor:pointer;
+margin:10px;
+transition:0.3s;
+}
+
+button:hover{
+background:magenta;
+color:black;
+box-shadow:0 0 20px magenta;
+}
+
+.container{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:25px;
+margin:40px auto;
+max-width:1200px;
+}
+
+
+.card{
+width:180px;
+height:260px;
+border-radius:15px;
+position:relative;
+perspective:1000px;
+}
+
+.card-inner{
+position:relative;
+width:100%;
+height:100%;
+transform-style:preserve-3d;
+transition:0.3s;
+}
+
+.card.flipped .card-inner{
+transform:rotateY(180deg);
+}
+
+.card-front{
+position:absolute;
+width:100%;
+height:100%;
+border-radius:15px;
+background:#111;
+display:flex;
+justify-content:center;
+align-items:center;
+backface-visibility:hidden;
+font-size:40px;
+}
+
+.card-back{
+position:absolute;
+width:100%;
+height:100%;
+border-radius:15px;
+/* transform:rotateY(180deg); */
+background:#222;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+align-items:center;
+backface-visibility:hidden;
+overflow:hidden;
+}
+
+/* SOLO cuando está dentro del sobre */
+.card-inner .card-back{
+transform: rotateY(180deg);
+}
+
+.img-carta{
+width:100%;
+height:85%;
+object-fit:cover;
+}
+
+.rareza-label{
+width:100%;
+padding:5px;
+font-weight:bold;
+background:black;
+}
+
+.card.revealed.normal{ box-shadow:0 0 10px gray; }
+.card.revealed.especial{ box-shadow:0 0 25px cyan; }
+.card.revealed.raro{ box-shadow:0 0 30px blue; }
+.card.revealed.legendaria{ box-shadow:0 0 45px gold; }
+.card.revealed.maestra{ box-shadow:0 0 55px white; }
+.card.revealed.dios{ box-shadow:0 0 70px red; } /* ARREGLADO */
+.card.revealed{
+animation: flotarCarta 6s ease-in-out infinite;
+}
+/* Más rápido para legendaria */
+.card.revealed.legendaria{
+animation: flotarCarta 4s ease-in-out infinite;
+}
+
+/* Más intenso para dios */
+.card.revealed.dios{
+animation: flotarCarta 2.5s ease-in-out infinite;
+}
+.stack{
+position:absolute;
+top:5px;
+left:5px;
+font-size:12px;
+background:black;
+padding:2px 6px;
+border-radius:5px;
+}
+
+.hidden{ display:none; }
+
+#inicio{
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:flex-start;
+min-height:100vh;
+padding-top:120px;
+}
+
+/* GRIMORIO
+#grimorioContainer,
+#grimorioDios{
+display:grid;
+grid-template-columns: repeat(auto-fill, 180px);
+justify-content:center;
+gap:25px;
+margin-top:40px;
+width:95%;
+}
+#grimorio{
+overflow-y:auto;
+padding-bottom:100px;
+}*/
+.admin{
+position:fixed;
+bottom:10px;
+right:10px;
+}
+
+.monedas{
+position:fixed;
+top:10px;
+right:10px;
+font-size:18px;
+}
+  .visor{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.8);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:999;
+}
+
+.visor.activo{
+display:flex; /* 👈 SOLO cuando está activo */
+}
+
+.visor img{
+max-width:90%;
+max-height:90%;
+border-radius:15px;
+box-shadow:0 0 60px 20px gold;
+}
+/* =========================
+ANIMACIÓN SOBRE ÉPICO
+========================= */
+
+@keyframes aparecerSobre {
+0% { transform: scale(0.5); opacity:0; }
+100% { transform: scale(1); opacity:1; }
+}
+
+@keyframes destelloMagico {
+0% { box-shadow:0 0 0px purple; }
+50% { box-shadow:0 0 80px 20px magenta; }
+100% { box-shadow:0 0 0px purple; }
+}
+
+@keyframes cartaAparece {
+0% { transform: scale(0) rotateY(180deg); opacity:0; }
+100% { transform: scale(1) rotateY(180deg); opacity:1; }
+}
+
+@keyframes sacudir {
+0% { transform: translateX(0); }
+25% { transform: translateX(-10px); }
+50% { transform: translateX(10px); }
+75% { transform: translateX(-10px); }
+100% { transform: translateX(0); }
+}
+
+@keyframes moverGalaxia {
+0%{
+background-position: 0% 0%;
+}
+25%{
+background-position: 30% 20%;
+}
+50%{
+background-position: 60% 40%;
+}
+75%{
+background-position: 30% 60%;
+}
+100%{
+background-position: 0% 0%;
+}
+}
+
+
+@keyframes flotarCarta {
+0%   { transform: translate(0px, 0px); }
+25%  { transform: translate(2px, -3px); }
+50%  { transform: translate(-2px, 2px); }
+75%  { transform: translate(3px, 1px); }
+100% { transform: translate(0px, 0px); }
+}
+
+
+/* Clase activadora */
+.animar-sobre{
+animation: aparecerSobre 0.5s ease;
+}
+
+.brillo-magico{
+animation: destelloMagico 1s ease;
+}
+
+.carta-epica{
+animation: cartaAparece 0.4s ease forwards;
+}
+
+.sacudida{
+animation: sacudir 0.5s ease;
+}
+
+/* =========================
+EFECTOS NIVEL DIABLO
+========================= */
+
+@keyframes brilloLegendaria {
+0% { box-shadow:0 0 10px gold; }
+50% { box-shadow:0 0 80px 30px gold; }
+100% { box-shadow:0 0 10px gold; }
+}
+
+@keyframes brilloMaestra {
+0% { box-shadow:0 0 10px white; }
+50% { box-shadow:0 0 90px 40px white; }
+100% { box-shadow:0 0 10px white; }
+}
+
+@keyframes fondoRojoDios {
+0% { background:#000; }
+50% { background:#500; }
+100% { background:#000; }
+}
+
+.legendaria-efecto{
+animation: brilloLegendaria 1s ease;
+}
+
+.maestra-efecto{
+animation: brilloMaestra 1s ease;
+}
+
+.fondo-dios{
+animation: fondoRojoDios 0.6s ease;
+}
+/* =========================
+   EFECTO 3D MAESTRA
+========================= */
+
+.card.maestra{
+    perspective: 1000px;
+}
+
+.card.maestra .card-inner{
+    transform-style: preserve-3d;
+    transition: transform 0.2s ease;
+}
+
+.card.maestra .img-carta{
+    transform: translateZ(40px);
+    transition: transform 0.2s ease;
+}
+
+.card.maestra:hover .img-carta{
+    transform: translateZ(70px) scale(1.05);
+}
+
+.card.maestra .rareza-label{
+    transform: translateZ(20px);
+}
+
+/* =========================
+PARTICULAS MAGICAS
+========================= */
+
+#particulas{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+pointer-events:none;
+overflow:hidden;
+z-index:-1;
+}
+
+#inicio,
+#sobre,
+#grimorio,
+.admin,
+.monedas{
+position:relative;
+z-index:1;
+}
+
+.particula{
+position:absolute;
+background: radial-gradient(circle, white 0%, magenta 60%, transparent 100%);
+border-radius:50%;
+opacity:0.8;
+animation: flotar linear infinite;
+}
+
+@keyframes flotar{
+0%{
+transform: translateY(100vh) scale(0.3);
+opacity:0;
+}
+50%{
+opacity:1;
+}
+100%{
+transform: translateY(-10vh) scale(1);
+opacity:0;
+}
+}
+
+.gveret-levin-regular {
+  font-family: "Gveret Levin", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
