@@ -22,28 +22,29 @@ text-shadow:0 0 25px purple;
 }
 
 button{
-padding:16px 38px;
-font-size:17px;
-font-weight:bold;
+padding:15px 35px;
+font-size:16px;
 background:rgba(0,0,0,0.7);
+
+border:3px solid #b300ff;
 color:white;
-border:2px solid #ff00ff;
-border-radius:12px;
+
 cursor:pointer;
-margin:12px;
-transition:all 0.35s ease;
-box-shadow:0 0 12px #ff00ff;
-animation: brilloBoton 3s infinite;
+margin:10px;
+
+transition:0.3s;
+
+box-shadow:0 0 10px #b300ff;
 }
 
 button:hover{
-background:#ff00ff;
+background:#b300ff;
 color:black;
 
 box-shadow:
-0 0 15px #ff00ff,
-0 0 30px #ff00ff,
-0 0 60px #ff00ff;
+0 0 15px #b300ff,
+0 0 35px #b300ff,
+0 0 60px #b300ff;
 
 transform:scale(1.07);
 }
@@ -379,7 +380,7 @@ z-index:1;
 
 .particula{
 position:absolute;
-background: radial-gradient(circle, white 0%, magenta 60%, transparent 100%);
+background: radial-gradient(circle, white 0%, cyan 60%, transparent 100%);
 border-radius:50%;
 opacity:0.8;
 animation: flotar linear infinite;
