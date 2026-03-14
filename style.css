@@ -405,3 +405,35 @@ opacity:0;
   font-weight: 400;
   font-style: normal;
 }
+
+/* =========================
+OJOS QUE SIGUEN EL MOUSE
+========================= */
+
+.ojos-creepy{
+position:fixed;
+bottom:40px;
+left:40px;
+display:flex;
+gap:15px;
+z-index:2;
+}
+
+.ojo{
+width:60px;
+height:60px;
+background:black;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+box-shadow:0 0 15px red;
+}
+
+.pupila{
+width:20px;
+height:20px;
+background:red;
+border-radius:50%;
+position:relative;
+}
