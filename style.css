@@ -492,27 +492,62 @@ position:relative;
 width:90%;
 max-width:1000px;
 margin:auto;
-perspective:2000px;
+
+perspective:2500px;
+
+background:
+linear-gradient(90deg,
+rgba(0,0,0,0.8),
+rgba(0,0,0,0.2),
+rgba(0,0,0,0.8));
+
+padding:40px;
+
+border-radius:15px;
+
+box-shadow:
+0 0 60px black,
+inset 0 0 40px black;
 }
+
+/* =========================
+PAGINAS PERGAMINO
+========================= */
 
 .pagina{
 position:absolute;
 width:100%;
-min-height:600px;
-background:rgba(20,20,20,0.95);
+min-height:650px;
+
+background:
+linear-gradient(rgba(245,222,179,0.9), rgba(222,184,135,0.9)),
+url("img/pergamino.jpg");
+
+background-size:cover;
+background-position:center;
+
+color:black;
+
 border-radius:10px;
-padding:20px;
+padding:30px;
 
 transform-origin:left;
 transform:rotateY(180deg);
-transition:transform 0.8s;
+transition:transform 1s;
 
-box-shadow:0 0 40px black;
+box-shadow:
+0 0 40px rgba(0,0,0,0.8),
+inset 0 0 80px rgba(0,0,0,0.5);
 }
 
 .pagina.activa{
 transform:rotateY(0deg);
 z-index:2;
+}
+
+.pagina.volteada{
+transform:rotateY(-180deg);
+z-index:1;
 }
 
 .controles-libro{
