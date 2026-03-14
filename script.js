@@ -673,16 +673,18 @@ abrirSobre();
 
 window.addEventListener("deviceorientation", function(event){
 
-let tiltX = event.gamma; // izquierda-derecha
-let tiltY = event.beta;  // adelante-atras
+if(!event.gamma || !event.beta) return;
+
+let tiltX = event.gamma;
+let tiltY = event.beta;
 
 document.querySelectorAll(".card.revealed").forEach(card => {
 
 let inner = card.querySelector(".card-inner");
 if(!inner) return;
 
-let rotY = tiltX * 0.5;
-let rotX = tiltY * -0.3;
+let rotY = tiltX * 0.2;
+let rotX = tiltY * -0.2;
 
 inner.style.transform =
 `rotateY(180deg) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
@@ -692,28 +694,22 @@ inner.style.transform =
 });
 
 // ==========================
-// PASAR PAGINAS DESLIZANDO
+// PASAR PAGINAS DESLIZANDO (SEGURO)
 // ==========================
 
 let swipeStartX = 0;
-let swipeEndX = 0;
 
 document.addEventListener("touchstart", function(e){
 swipeStartX = e.changedTouches[0].screenX;
-});
+}, {passive:true});
 
 document.addEventListener("touchend", function(e){
-swipeEndX = e.changedTouches[0].screenX;
-controlarSwipeLibro();
-});
 
-function controlarSwipeLibro(){
-
+let swipeEndX = e.changedTouches[0].screenX;
 let distancia = swipeStartX - swipeEndX;
 
 let grimorio = document.getElementById("grimorio");
-
-if(grimorio.classList.contains("hidden")) return;
+if(!grimorio || grimorio.classList.contains("hidden")) return;
 
 if(distancia > 80){
 paginaSiguiente();
@@ -723,4 +719,4 @@ if(distancia < -80){
 paginaAnterior();
 }
 
-}
+}, {passive:true});
