@@ -515,6 +515,46 @@ setInterval(crearParticula, 200);
 });
 
 // ==========================
+// SISTEMA DE PAGINAS LIBRO
+// ==========================
+
+let paginaActual = 1;
+const totalPaginas = 2;
+
+function paginaSiguiente(){
+
+if(paginaActual < totalPaginas){
+
+let pagina = document.getElementById("pagina"+paginaActual);
+
+pagina.classList.remove("activa");
+pagina.classList.add("volteada");
+
+paginaActual++;
+
+document.getElementById("pagina"+paginaActual).classList.add("activa");
+
+}
+
+}
+
+function paginaAnterior(){
+
+if(paginaActual > 1){
+
+document.getElementById("pagina"+paginaActual).classList.remove("activa");
+
+paginaActual--;
+
+let pagina = document.getElementById("pagina"+paginaActual);
+
+pagina.classList.remove("volteada");
+pagina.classList.add("activa");
+
+}
+
+}
+// ==========================
 // OJOS QUE SIGUEN EL CURSOR
 // ==========================
 
