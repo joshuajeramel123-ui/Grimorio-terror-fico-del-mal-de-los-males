@@ -636,3 +636,91 @@ document.getElementById("pagina"+paginaActual).classList.add("activa");
 }
 
 }
+
+// ==========================
+// ABRIR SOBRE DESLIZANDO
+// ==========================
+
+let touchStartY = 0;
+let touchEndY = 0;
+
+document.addEventListener("touchstart", function(e){
+touchStartY = e.changedTouches[0].screenY;
+});
+
+document.addEventListener("touchend", function(e){
+touchEndY = e.changedTouches[0].screenY;
+detectarSwipe();
+});
+
+function detectarSwipe(){
+
+let distancia = touchStartY - touchEndY;
+
+if(distancia > 80){ // deslizar hacia arriba
+let inicio = document.getElementById("inicio");
+
+if(!inicio.classList.contains("hidden")){
+abrirSobre();
+}
+}
+
+}
+
+// ==========================
+// INCLINACION DE CARTAS
+// ==========================
+
+window.addEventListener("deviceorientation", function(event){
+
+let tiltX = event.gamma; // izquierda-derecha
+let tiltY = event.beta;  // adelante-atras
+
+document.querySelectorAll(".card.revealed").forEach(card => {
+
+let inner = card.querySelector(".card-inner");
+if(!inner) return;
+
+let rotY = tiltX * 0.5;
+let rotX = tiltY * -0.3;
+
+inner.style.transform =
+`rotateY(180deg) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+
+});
+
+});
+
+// ==========================
+// PASAR PAGINAS DESLIZANDO
+// ==========================
+
+let swipeStartX = 0;
+let swipeEndX = 0;
+
+document.addEventListener("touchstart", function(e){
+swipeStartX = e.changedTouches[0].screenX;
+});
+
+document.addEventListener("touchend", function(e){
+swipeEndX = e.changedTouches[0].screenX;
+controlarSwipeLibro();
+});
+
+function controlarSwipeLibro(){
+
+let distancia = swipeStartX - swipeEndX;
+
+let grimorio = document.getElementById("grimorio");
+
+if(grimorio.classList.contains("hidden")) return;
+
+if(distancia > 80){
+paginaSiguiente();
+}
+
+if(distancia < -80){
+paginaAnterior();
+}
+
+}
