@@ -61,6 +61,7 @@ justify-content:center;
 gap:25px;
 margin:40px auto;
 max-width:1200px;
+padding:10px;
 }
 
 
@@ -552,4 +553,69 @@ z-index:1;
 
 .controles-libro{
 margin-top:30px;
+}
+
+/* =========================
+RESPONSIVE CELULAR
+========================= */
+
+@media (max-width:600px){
+
+h1{
+font-size:32px;
+}
+
+button{
+padding:12px 20px;
+font-size:14px;
+}
+
+.container{
+gap:15px;
+}
+
+.card{
+width:130px;
+height:190px;
+}
+
+.libro{
+width:95%;
+padding:20px;
+}
+
+.pagina{
+padding:15px;
+min-height:500px;
+}
+
+.monedas{
+font-size:14px;
+}
+
+}
+
+/* =========================
+RESPONSIVE TABLET
+========================= */
+
+@media (max-width:900px){
+
+h1{
+font-size:40px;
+}
+
+.container{
+gap:20px;
+}
+
+.card{
+width:150px;
+height:220px;
+}
+
+.libro{
+width:92%;
+}
+
 }
