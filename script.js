@@ -565,3 +565,34 @@ contenedor.appendChild(ojo);
 }
 
 });
+
+// ==========================
+// SISTEMA DE PAGINAS LIBRO
+// ==========================
+
+let paginaActual = 1;
+const totalPaginas = 2;
+
+function paginaSiguiente(){
+
+if(paginaActual < totalPaginas){
+document.getElementById("pagina"+paginaActual).classList.remove("activa");
+
+paginaActual++;
+
+document.getElementById("pagina"+paginaActual).classList.add("activa");
+}
+
+}
+
+function paginaAnterior(){
+
+if(paginaActual > 1){
+document.getElementById("pagina"+paginaActual).classList.remove("activa");
+
+paginaActual--;
+
+document.getElementById("pagina"+paginaActual).classList.add("activa");
+}
+
+}
