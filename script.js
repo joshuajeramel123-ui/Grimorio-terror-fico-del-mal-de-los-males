@@ -540,3 +540,28 @@ pupil.style.transform = `translate(${moveX}px, ${moveY}px)`;
 
 });
 
+// ==========================
+// CREAR OJOS ESCONDIDOS
+// ==========================
+
+window.addEventListener("load", function(){
+
+const contenedor = document.getElementById("ojosOscuros");
+
+for(let i=0;i<10;i++){
+
+let ojo = document.createElement("div");
+ojo.className="ojo-oscuro";
+
+ojo.style.top = Math.random()*90 + "vh";
+ojo.style.left = Math.random()*90 + "vw";
+
+let pupila = document.createElement("div");
+pupila.className="pupila-oscura";
+
+ojo.appendChild(pupila);
+contenedor.appendChild(ojo);
+
+}
+
+});
