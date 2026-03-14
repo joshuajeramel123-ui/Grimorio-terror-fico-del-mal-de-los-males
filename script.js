@@ -514,4 +514,29 @@ setInterval(crearParticula, 200);
 
 });
 
+// ==========================
+// OJOS QUE SIGUEN EL CURSOR
+// ==========================
+
+document.addEventListener("mousemove", function(e){
+
+let pupils = document.querySelectorAll(".pupila");
+
+pupils.forEach(function(pupil){
+
+let rect = pupil.getBoundingClientRect();
+
+let x = rect.left + rect.width/2;
+let y = rect.top + rect.height/2;
+
+let angle = Math.atan2(e.clientY - y, e.clientX - x);
+
+let moveX = Math.cos(angle) * 10;
+let moveY = Math.sin(angle) * 10;
+
+pupil.style.transform = `translate(${moveX}px, ${moveY}px)`;
+
+});
+
+});
 
