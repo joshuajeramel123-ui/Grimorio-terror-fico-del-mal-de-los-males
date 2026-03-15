@@ -619,3 +619,15 @@ width:92%;
 }
 
 }
+
+/* =========================
+CURSOR PERSONALIZADO
+========================= */
+
+body{
+cursor: url("img/dedo_cursor.png"), auto;
+}
+
+button{
+cursor: url("img/dedo_cursor.png"), pointer;
+}
