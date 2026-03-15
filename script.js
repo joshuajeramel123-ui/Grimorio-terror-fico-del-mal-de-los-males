@@ -606,86 +606,88 @@ contenedor.appendChild(ojo);
 
 });
 
+
 // ==========================
 // ABRIR SOBRE DESLIZANDO
 // ==========================
 
-let touchStartY = 0;
-let touchEndY = 0;
+let startX = 0;
 
-document.addEventListener("touchstart", function(e){
-touchStartY = e.changedTouches[0].screenY;
+document.addEventListener("touchstart", e=>{
+startX = e.touches[0].clientX;
 });
 
-document.addEventListener("touchend", function(e){
-touchEndY = e.changedTouches[0].screenY;
-detectarSwipe();
-});
+document.addEventListener("touchend", e=>{
 
-function detectarSwipe(){
+let endX = e.changedTouches[0].clientX;
+let diff = startX - endX;
 
-let distancia = touchStartY - touchEndY;
-
-if(distancia > 80){ // deslizar hacia arriba
-let inicio = document.getElementById("inicio");
-
-if(!inicio.classList.contains("hidden")){
+if(Math.abs(diff) > 100){
 abrirSobre();
 }
-}
-
-}
-
-// ==========================
-// INCLINACION DE CARTAS
-// ==========================
-
-window.addEventListener("deviceorientation", function(event){
-
-if(!event.gamma || !event.beta) return;
-
-let tiltX = event.gamma;
-let tiltY = event.beta;
-
-document.querySelectorAll(".card.revealed").forEach(card => {
-
-let inner = card.querySelector(".card-inner");
-if(!inner) return;
-
-let rotY = tiltX * 0.2;
-let rotX = tiltY * -0.2;
-
-inner.style.transform =
-`rotateY(180deg) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
-
-});
 
 });
 
 // ==========================
-// PASAR PAGINAS DESLIZANDO (SEGURO)
+// PASAR PAGINAS DESLIZANDO
 // ==========================
 
-let swipeStartX = 0;
+let libroStart = 0;
 
-document.addEventListener("touchstart", function(e){
-swipeStartX = e.changedTouches[0].screenX;
-}, {passive:true});
+document.addEventListener("touchstart", e=>{
+libroStart = e.touches[0].clientX;
+});
 
-document.addEventListener("touchend", function(e){
+document.addEventListener("touchend", e=>{
 
-let swipeEndX = e.changedTouches[0].screenX;
-let distancia = swipeStartX - swipeEndX;
+let libroEnd = e.changedTouches[0].clientX;
 
-let grimorio = document.getElementById("grimorio");
-if(!grimorio || grimorio.classList.contains("hidden")) return;
-
-if(distancia > 80){
+if(libroStart - libroEnd > 80){
 paginaSiguiente();
 }
 
-if(distancia < -80){
+if(libroStart - libroEnd < -80){
 paginaAnterior();
 }
 
-}, {passive:true});
+});
+
+// ==========================
+// CARTAS QUE SE INCLINAN
+// ==========================
+
+window.addEventListener("deviceorientation", e=>{
+
+let x = e.gamma;
+let y = e.beta;
+
+document.querySelectorAll(".card-inner").forEach(card=>{
+
+card.style.transform =
+`rotateY(${x*0.5}deg) rotateX(${y*-0.3}deg)`;
+
+});
+
+});
+
+// ==========================
+// ZOOM CARTA EN CELULAR
+// ==========================
+
+document.addEventListener("touchstart", e=>{
+
+let card = e.target.closest(".card");
+
+if(card){
+card.classList.add("zoomCarta");
+}
+
+});
+
+document.addEventListener("touchend", e=>{
+
+document.querySelectorAll(".card").forEach(card=>{
+card.classList.remove("zoomCarta");
+});
+
+});
