@@ -555,12 +555,12 @@ pagina.classList.add("activa");
 
 }
 // ==========================
-// OJOS QUE SIGUEN EL CURSOR
+// TODOS LOS OJOS SIGUEN EL CURSOR
 // ==========================
 
 document.addEventListener("mousemove", function(e){
 
-let pupils = document.querySelectorAll(".pupila");
+let pupils = document.querySelectorAll(".pupila, .pupila-oscura");
 
 pupils.forEach(function(pupil){
 
