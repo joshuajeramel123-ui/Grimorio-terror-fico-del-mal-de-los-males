@@ -453,7 +453,8 @@ pointer-events:none;
 z-index:0;
 }
 
-.ojo-oscuro{
+.ojo-oscuro,
+.ojo{
 position:absolute;
 width:40px;
 height:40px;
