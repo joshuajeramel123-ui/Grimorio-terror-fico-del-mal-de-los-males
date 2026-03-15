@@ -611,7 +611,7 @@ contenedor.appendChild(ojo);
 // ABRIR SOBRE DESLIZANDO
 // ==========================
 
-let startX = 0;
+/*let startX = 0;
 
 document.addEventListener("touchstart", e=>{
 startX = e.touches[0].clientX;
@@ -626,7 +626,7 @@ if(Math.abs(diff) > 100){
 abrirSobre();
 }
 
-});
+});*/
 
 // ==========================
 // PASAR PAGINAS DESLIZANDO
