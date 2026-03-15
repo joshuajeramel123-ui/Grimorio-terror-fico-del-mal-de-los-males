@@ -592,7 +592,7 @@ for(let i=0;i<10;i++){
 
 let ojo = document.createElement("div");
 ojo.className="ojo-oscuro";
-
+ojo.style.animationDelay = Math.random() * 4 + "s";
 ojo.style.top = Math.random()*90 + "vh";
 ojo.style.left = Math.random()*90 + "vw";
 
