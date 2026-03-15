@@ -632,3 +632,37 @@ cursor: url("img/dedo_cursor.png"), auto;
 button{
 cursor: url("img/dedo_cursor.png"), pointer;
 }
+.zoomCarta{
+transform:scale(1.2);
+z-index:1000;
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media (max-width:768px){
+
+.container{
+grid-template-columns:repeat(2,1fr);
+}
+
+.card{
+width:140px;
+height:200px;
+}
+
+}
+
+@media (max-width:480px){
+
+.container{
+grid-template-columns:1fr;
+}
+
+.card{
+width:160px;
+height:220px;
+}
+
+}
