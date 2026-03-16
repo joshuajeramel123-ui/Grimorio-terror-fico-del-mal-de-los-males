@@ -1,6 +1,6 @@
 body{
 margin:0;
-overflow-x:hidden;
+overflow:hidden;
 font-family: 'Poppins', sans-serif;
 
 background:
@@ -668,14 +668,13 @@ height:220px;
 #inicio,
 #sobre,
 #grimorio{
-
+position:absolute;
+top:0;
+left:0;
 width:100%;
-min-height:100vh;
-
+height:100vh;
 display:flex;
 flex-direction:column;
-
 justify-content:center;
 align-items:center;
-
 }
