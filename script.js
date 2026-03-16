@@ -180,8 +180,9 @@ guardar();
 
 /*====================== Abrir sobre =============*/
 function abrirSobre(){
-window.scrollTo(0,0);
-if(!adminActivo){
+window.scrollTo({top:0,left:0,behavior:"instant"});
+document.body.scrollTop = 0;
+document.documentElement.scrollTop = 0;if(!adminActivo){
 if(monedas < 10) return;
 monedas -= 10;
 guardar();
@@ -308,7 +309,9 @@ contador.innerText = "Cartas únicas: " + total + " / " + cartas.length;
 /*================== Es el grimorio de las cartas ============================*/
 
 function verGrimorio(){
-window.scrollTo(0,0);
+window.scrollTo({top:0,left:0,behavior:"instant"});
+document.body.scrollTop = 0;
+document.documentElement.scrollTop = 0;
 document.getElementById("inicio").classList.add("hidden");
 document.getElementById("sobre").classList.add("hidden");
 document.getElementById("grimorio").classList.remove("hidden");
@@ -409,7 +412,9 @@ actualizarContador();
 }
 
 function volverInicio(){   /*====================volver inicio=====================================*/
-window.scrollTo(0,0);
+window.scrollTo({top:0,left:0,behavior:"instant"});
+document.body.scrollTop = 0;
+document.documentElement.scrollTop = 0;
 document.getElementById("sobre").classList.add("hidden");
 document.getElementById("grimorio").classList.add("hidden");
 document.getElementById("inicio").classList.remove("hidden");
