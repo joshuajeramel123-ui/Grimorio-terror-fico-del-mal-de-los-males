@@ -661,10 +661,10 @@ window.addEventListener("deviceorientation", e=>{
 let x = e.gamma;
 let y = e.beta;
 
-document.querySelectorAll(".card-inner").forEach(card=>{
+document.querySelectorAll(".card.flipped .card-inner").forEach(card=>{
 
 card.style.transform =
-`rotateY(${x*0.5}deg) rotateX(${y*-0.3}deg)`;
+`rotateY(180deg) rotateX(${y*-0.3}deg) rotateY(${x*0.5}deg)`;
 
 });
 
