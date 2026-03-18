@@ -162,40 +162,30 @@ border-radius:5px;
 display:none; 
 }
 
-#inicio{
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:flex-start;
-min-height:100vh;
-padding-top:120px;
-}
-
-/* GRIMORIO
-#grimorioContainer,
-#grimorioDios{
-display:grid;
-grid-template-columns: repeat(auto-fill, 180px);
-justify-content:center;
-gap:25px;
-margin-top:40px;
-width:95%;
-}
-#grimorio{
-overflow-y:auto;
-padding-bottom:100px;
-}*/
-.admin{
-position: relative; /* Cambiado de fixed a relative */
-    margin-top: 30px;   /* Separación de los botones de arriba */
-    bottom: auto;
-    right: auto;
-    z-index: 100;
+#inicio {
     display: flex;
-    gap: 10px;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Centra todo verticalmente */
+    min-height: 100dvh; /* Usa dynamic viewport height para móviles */
+    padding: 20px;
+    box-sizing: border-box;
 }
 
+/* El panel de admin también debe crecer en móvil */
+.admin {
+    position: relative;
+    margin-top: 40px;
+    flex-direction: column; /* Botones de admin uno sobre otro en móvil */
+    align-items: center;
+    width: 100%;
+}
+
+.admin button {
+    width: 60% !important;
+    padding: 12px !important;
+    font-size: 16px !important;
+}
 .monedas{
 position: fixed;
     top: 10px;
@@ -717,4 +707,67 @@ height:220px;
 
 .hidden {
     display: none !important;
+}
+
+/* ============================================================
+   ADAPTACIÓN PARA CELULARES Y TABLETS
+   ============================================================ */
+
+@media (max-width: 1024px) {
+    /* Título más legible */
+    h1 {
+        font-size: 38px !important;
+        padding: 0 10px;
+        line-height: 1.2;
+    }
+
+    /* Botones más grandes para dedos */
+    button, .boton-magico {
+        width: 85%; /* Casi todo el ancho */
+        max-width: 400px;
+        padding: 22px !important; /* Más espacio interno */
+        font-size: 22px !important; /* Letra más grande */
+        margin: 15px auto !important;
+        display: block; /* Uno debajo de otro */
+    }
+
+    /* Ajuste de monedas en la esquina */
+    .monedas {
+        font-size: 24px !important;
+        top: 15px;
+        right: 15px;
+        background: rgba(0, 0, 0, 0.6);
+        padding: 8px 15px;
+        border-radius: 50px;
+    }
+
+    /* Cartas más grandes en el celular para que se vean bien */
+    .card {
+        width: 160px !important;
+        height: 230px !important;
+    }
+
+    /* Contenedor de cartas con mejor espacio */
+    .container, #grimorioContainer {
+        gap: 15px !important;
+        padding: 20px 5px !important;
+    }
+}
+
+/* Ajustes extra para celulares muy pequeños */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 28px !important;
+    }
+
+    button {
+        font-size: 18px !important;
+        padding: 18px !important;
+    }
+
+    /* Las cartas se ponen en 2 columnas para que no se vean diminutas */
+    #grimorioContainer {
+        grid-template-columns: repeat(2, 1fr) !important;
+        justify-items: center;
+    }
 }
