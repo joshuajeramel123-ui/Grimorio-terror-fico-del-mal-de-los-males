@@ -200,8 +200,12 @@ position: relative; /* Cambiado de fixed a relative */
 position: fixed;
     top: 10px;
     right: 10px;
-    font-size: 18px;
-    z-index: 200;
+    font-size: 20px; /* Un poco más grande para que sea legible */
+    z-index: 9999; /* Máxima prioridad */
+    background: rgba(0, 0, 0, 0.5); /* Fondo semitransparente para que resalte */
+    padding: 5px 10px;
+    border-radius: 10px;
+    pointer-events: none; /* Para que no estorbe si quieres picar algo abajo */
 }
   .visor{
 position:fixed;
@@ -374,7 +378,7 @@ width:100%;
 height:100%;
 pointer-events:none;
 overflow:hidden;
-z-index:-1;
+z-index: 0;
 }
 
 #inicio,
@@ -673,17 +677,29 @@ height:220px;
 }
 /* BUSCA ESTO EN TU CSS Y MODIFÍCALO */
 #inicio, #sobre {
-    position: fixed; /* Fijos para que no se muevan */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    z-index: 1;
-    background: inherit;
+    justify-content: center;
+    width: 100%;
+    /* En móviles, a veces 100vh da problemas con la barra del navegador */
+    min-height: 100dvh; 
+    padding: 20px 0;
+    box-sizing: border-box;
+}
+
+/* Ajusta el tamaño de los botones para dedos (Touch targets) */
+@media (max-width: 600px) {
+    button {
+        width: 80%; /* Más anchos para que sea fácil picar */
+        padding: 20px;
+        margin: 10px 0;
+    }
+    
+    h1 {
+        font-size: 28px; /* Reducir el título para que no ocupe toda la pantalla */
+        margin-bottom: 30px;
+    }
 }
 
 #grimorio {
