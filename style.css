@@ -1,22 +1,24 @@
 body{
 margin:0;
 overflow:hidden;
+overflow-y: hidden; /* Evita scroll en Inicio y Sobre */
 font-family: 'Poppins', sans-serif;
 
-background:
-linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
 url("img/new_photo_fondo.jpeg");
-
 background-size: cover;
 background-position: center;
 background-repeat: no-repeat;
 background-attachment: fixed;
-
 color:white;
 text-align:center;
 animation: moverGalaxia 120s linear infinite;
+cursor: url("img/dedo_cursor.png"), auto;
 }
-
+/* Esta clase la activamos con JS solo en el Grimorio */
+body.con-scroll {
+    overflow-y: auto !important;
+}
 h1{
 font-size:55px;
 text-shadow:0 0 25px purple;
@@ -184,16 +186,22 @@ overflow-y:auto;
 padding-bottom:100px;
 }*/
 .admin{
-position:fixed;
-bottom:10px;
-right:10px;
+position: relative; /* Cambiado de fixed a relative */
+    margin-top: 30px;   /* Separación de los botones de arriba */
+    bottom: auto;
+    right: auto;
+    z-index: 100;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
 }
 
 .monedas{
-position:fixed;
-top:10px;
-right:10px;
-font-size:18px;
+position: fixed;
+    top: 10px;
+    right: 10px;
+    font-size: 18px;
+    z-index: 200;
 }
   .visor{
 position:fixed;
@@ -411,12 +419,10 @@ OJOS QUE SIGUEN EL MOUSE
 ========================= */
 
 .ojos-creepy{
-position:fixed;
-bottom:40px;
-left:40px;
-display:flex;
-gap:15px;
-z-index:2;
+position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 200;
 }
 
 .ojo{
@@ -449,7 +455,7 @@ left:0;
 width:100%;
 height:100%;
 pointer-events:none;
-z-index:0;
+z-index: 0; /* Ojos de fondo detrás de los botones */
 }
 
 .ojo-oscuro,
@@ -665,25 +671,34 @@ height:220px;
 }
 
 }
-/* BUSCA ESTO EN TU CSS Y MODIFÍCALO 
-#inicio,
-#sobre,
-#grimorio {
-    position: absolute; /* Esto hace que se encimen 
+/* BUSCA ESTO EN TU CSS Y MODIFÍCALO */
+#inicio, #sobre {
+    position: fixed; /* Fijos para que no se muevan */
     top: 0;
     left: 0;
     width: 100%;
-    min-height: 100vh; /* Cambia height por min-height 
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* Añade estas dos líneas: 
-    background: inherit; 
     z-index: 1;
+    background: inherit;
 }
 
-/* Asegúrate de que .hidden realmente oculte y no solo quite el display 
+#grimorio {
+    position: absolute; /* Permite que crezca hacia abajo */
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+    padding-bottom: 50px;
+}
+
 .hidden {
     display: none !important;
-}*/
+}
