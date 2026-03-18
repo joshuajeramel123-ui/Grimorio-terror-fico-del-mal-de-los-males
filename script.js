@@ -180,45 +180,46 @@ guardar();
 
 /*====================== Abrir sobre =============*/
 function abrirSobre(){
-window.scrollTo({top:0,left:0,behavior:"instant"});
-document.body.scrollTop = 0;
-document.documentElement.scrollTop = 0;if(!adminActivo){
-if(monedas < 10) return;
-monedas -= 10;
-guardar();
-actualizarContador();
+// 1. Quitamos el scroll para que la pantalla del sobre sea fija
+    document.body.classList.remove("con-scroll");
+    window.scrollTo({top: 0, left: 0, behavior: "instant"});
+    // Lógica de monedas (tu código original)
+    if(!adminActivo){
+        if(monedas < 10) return;
+        monedas -= 10;
+        guardar();
+        actualizarContador();
 }
 
-document.getElementById("inicio").classList.add("hidden");
-document.getElementById("grimorio").classList.add("hidden");
-document.getElementById("sobre").classList.remove("hidden");
-let pantallaSobre = document.getElementById("sobre");
-pantallaSobre.classList.add("animar-sobre");
+// 2. Cambio de pantallas
+    document.getElementById("inicio").classList.add("hidden");
+    document.getElementById("grimorio").classList.add("hidden");
+    document.getElementById("sobre").classList.remove("hidden");
+    
+    let pantallaSobre = document.getElementById("sobre");
+    pantallaSobre.classList.add("animar-sobre");
 
-setTimeout(()=>{
-pantallaSobre.classList.remove("animar-sobre");
-},500);
+    setTimeout(() => {
+        pantallaSobre.classList.remove("animar-sobre");
+    }, 500);
 
-let container=document.getElementById("cartasContainer");
-container.innerHTML="";
+// 3. Generación de cartas (tu lógica de renderizado)
+    let container = document.getElementById("cartasContainer");
+    container.innerHTML = "";
+    let generadas = [];
 
-let generadas=[];
+    for(let i = 0; i < 5; i++){
+        let rareza = generarRareza();
+        let posibles = cartas.filter(c => c.rareza === rareza);
+        if(posibles.length === 0) posibles = cartas.filter(c => c.rareza === "normal");
 
-for(let i=0;i<5;i++){
-
-let rareza=generarRareza();
-let posibles=cartas.filter(c=>c.rareza===rareza);
-
-if(posibles.length===0){
-posibles=cartas.filter(c=>c.rareza==="normal");
-}
-
-let carta=posibles[Math.floor(Math.random()*posibles.length)];
-if(!grimorio[carta.imagen]){
-grimorio[carta.imagen]={...carta,cantidad:1};
-}else{
-grimorio[carta.imagen].cantidad++;
-}
+        let carta = posibles[Math.floor(Math.random() * posibles.length)];
+        
+        if(!grimorio[carta.imagen]){
+            grimorio[carta.imagen] = {...carta, cantidad: 1};
+        } else {
+            grimorio[carta.imagen].cantidad++;
+        }
 
 let div=document.createElement("div");
 div.className="card";
@@ -240,12 +241,10 @@ generadas.push({element:div,rare:carta.rareza});
 
 guardar();
 
-generadas.forEach((carta,index)=>{
-setTimeout(()=>{
-
-carta.element.classList.add("flipped");
-carta.element.classList.add("revealed");
-carta.element.classList.add(carta.rare);
+// Animación de revelado
+    generadas.forEach((carta, index) => {
+        setTimeout(() => {
+            carta.element.classList.add("flipped", "revealed", carta.rare);
 
 /* =========================
 EFECTOS SEGÚN RAREZA
@@ -309,18 +308,17 @@ contador.innerText = "Cartas únicas: " + total + " / " + cartas.length;
 /*================== Es el grimorio de las cartas ============================*/
 
 function verGrimorio(){
-window.scrollTo({top:0,left:0,behavior:"instant"});
-document.body.scrollTop = 0;
-document.documentElement.scrollTop = 0;
+// 1. ACTIVAMOS EL SCROLL (importante para ver todas las cartas)
+    document.body.classList.add("con-scroll");
+    window.scrollTo({top: 0, left: 0, behavior: "instant"});
 document.getElementById("inicio").classList.add("hidden");
-document.getElementById("sobre").classList.add("hidden");
-document.getElementById("grimorio").classList.remove("hidden");
+    document.getElementById("sobre").classList.add("hidden");
+    document.getElementById("grimorio").classList.remove("hidden");
 
 let container = document.getElementById("grimorioContainer");
-let containerDios = document.getElementById("grimorioDios");
-
-container.innerHTML = "";
-containerDios.innerHTML = "";
+    let containerDios = document.getElementById("grimorioDios");
+    container.innerHTML = "";
+    containerDios.innerHTML = "";
 
 /* ORDEN DE RAREZA */
 const ordenRareza = {
@@ -412,12 +410,13 @@ actualizarContador();
 }
 
 function volverInicio(){   /*====================volver inicio=====================================*/
-window.scrollTo({top:0,left:0,behavior:"instant"});
-document.body.scrollTop = 0;
-document.documentElement.scrollTop = 0;
-document.getElementById("sobre").classList.add("hidden");
-document.getElementById("grimorio").classList.add("hidden");
-document.getElementById("inicio").classList.remove("hidden");
+// 1. Quitamos el scroll para el menú principal
+    document.body.classList.remove("con-scroll");
+    window.scrollTo({top: 0, left: 0, behavior: "instant"});
+
+    document.getElementById("sobre").classList.add("hidden");
+    document.getElementById("grimorio").classList.add("hidden");
+    document.getElementById("inicio").classList.remove("hidden")
 }
 
 /* =========================
