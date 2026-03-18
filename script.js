@@ -181,6 +181,7 @@ guardar();
 /*====================== Abrir sobre =============*/
 function abrirSobre(){
 // 1. Quitamos el scroll para que la pantalla del sobre sea fija
+    console.log("Intentando abrir sobre. Monedas actuales:", monedas);
     document.body.classList.remove("con-scroll");
     window.scrollTo({top: 0, left: 0, behavior: "instant"});
     // Lógica de monedas (tu código original)
