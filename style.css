@@ -14,6 +14,9 @@ color:white;
 text-align:center;
 animation: moverGalaxia 120s linear infinite;
 cursor: url("img/dedo_cursor.png"), auto;
+/* Esto permite que la página crezca si hay muchas cartas */
+    min-height: 100vh;
+    overflow-x: hidden;
 }
 /* Esta clase la activamos con JS solo en el Grimorio */
 body.con-scroll {
@@ -61,6 +64,12 @@ gap:25px;
 margin:40px auto;
 max-width:1200px;
 padding:10px;
+
+/* En celulares, si hay muchas cartas, permite scrollear dentro */
+max-height: 70vh; 
+overflow-y: auto;
+border-radius: 15px;
+background: rgba(0,0,0,0.2);
 }
 
 
@@ -678,12 +687,11 @@ height:220px;
     box-sizing: border-box;
 }
 
-/* Ajusta el tamaño de los botones para dedos (Touch targets) */
-@media (max-width: 600px) {
-    button {
-        width: 80%; /* Más anchos para que sea fácil picar */
-        padding: 20px;
-        margin: 10px 0;
+/* Cuando estamos en el móvil, no centramos verticalmente para poder scrollear mejor */
+@media (max-width: 768px) {
+    #inicio, #sobre, #grimorio {
+        justify-content: flex-start;
+        padding-top: 80px; /* Espacio para que las monedas no tapen el título */
     }
     
     h1 {
