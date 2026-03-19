@@ -186,7 +186,7 @@ function abrirSobre(){
     window.scrollTo({top: 0, left: 0, behavior: "instant"});
     // Lógica de monedas (tu código original)
     if(!adminActivo){
-        if(monedas < 10) return;
+        if(monedas < 10) return alert("No tienes suficientes monedas");
         monedas -= 10;
         guardar();
         actualizarContador();
