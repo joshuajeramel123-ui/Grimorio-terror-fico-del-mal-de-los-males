@@ -378,24 +378,22 @@ animation: fondoRojoDios 0.6s ease;
 PARTICULAS MAGICAS
 ========================= */
 
-#particulas, #ojosOscuros {
+#particulas, #ojosOscuros, .ojos-creepy {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    /* CAMBIO CLAVE: Esto permite que los clics "atraviesen" los ojos y toquen los botones */
-    pointer-events: none !important; 
+    pointer-events: none !important; /* El clic atraviesa estos elementos */
     z-index: 0; 
 }
 
-/* Asegúrate de que los botones siempre estén al frente */
-button, .card, .monedas {
+/* Forzamos que los botones SIEMPRE estén al frente y sean clickeables */
+button, .card, .monedas, .admin {
     position: relative;
-    z-index: 10 !important;
+    z-index: 9999 !important; 
     pointer-events: auto !important;
 }
-
 #inicio,
 #sobre,
 #grimorio,
@@ -587,15 +585,29 @@ RESPONSIVE CELULAR
    CONFIGURACIÓN FINAL UNIFICADA PARA MÓVIL Y TABLET
    ============================================================ */
 @media (max-width: 1024px) {
-    /* Evitamos el scroll doble en la página principal */
+    /* Bloqueamos el scroll del fondo totalmente en estas pantallas */
+    body, html {
+        overflow: hidden !important;
+        height: 100dvh;
+    }
+
     #inicio, #sobre, #grimorio {
+        height: 100dvh;
+        overflow: hidden; /* Evita que la sección misma scrollee */
         display: flex;
         flex-direction: column;
-        justify-content: flex-start !important;
-        padding-top: 60px !important;
-        min-height: 100dvh;
-        overflow: hidden; /* Bloquea el scroll del fondo */
     }
+
+    /* El ÚNICO lugar que debe scrollear es el contenedor de cartas */
+    .container {
+        flex: 1; /* Ocupa el espacio disponible */
+        max-height: 65vh !important; 
+        overflow-y: scroll !important;
+        -webkit-overflow-scrolling: touch; /* Scroll suave en iPhone */
+        z-index: 10;
+        margin-bottom: 20px !important;
+    }
+}
 
     /* Título ajustado */
     h1 {
@@ -640,6 +652,21 @@ RESPONSIVE CELULAR
         font-size: 20px !important;
         background: rgba(0,0,0,0.8);
         padding: 8px 12px;
+    }
+#sobre {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start !important;
+        padding-top: 80px !important; 
+        gap: 15px !important;
+        min-height: 100dvh;
+    }
+
+    #sobre button {
+        margin: 10px auto !important;
+        min-height: 60px; 
+        width: 85% !important;
+        z-index: 9999 !important; /* Vital para que el dedo lo detecte */
     }
 } /* <--- AQUÍ ESTABA EL ERROR: Faltaba esta llave en tu código */
 
