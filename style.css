@@ -587,75 +587,73 @@ RESPONSIVE CELULAR
    CONFIGURACIÓN FINAL UNIFICADA PARA MÓVIL Y TABLET
    ============================================================ */
 @media (max-width: 1024px) {
-    #sobre {
+    /* Evitamos el scroll doble en la página principal */
+    #inicio, #sobre, #grimorio {
         display: flex;
         flex-direction: column;
         justify-content: flex-start !important;
-        padding-top: 20px !important;
-        gap: 10px; /* Separa los botones para que no se encimen */
+        padding-top: 60px !important;
+        min-height: 100dvh;
+        overflow: hidden; /* Bloquea el scroll del fondo */
     }
-    
-    /* Si el botón "Volver" se duplica o se ve mal, asegúrate de que no tenga márgenes locos */
-    #sobre button {
-        margin: 5px auto !important;
-        flex-shrink: 0; /* Evita que el botón se aplaste */
-    }
-}
 
+    /* Título ajustado */
     h1 {
-        font-size: 32px !important;
-        padding: 0 10px;
+        font-size: 30px !important;
+        margin-bottom: 10px;
     }
 
-    /* Botones grandes y fáciles de tocar */
+    /* BOTONES: Ahora con z-index alto para que puedas tocarlos */
     button, .boton-magico {
         width: 85% !important;
-        max-width: 400px;
-        padding: 20px !important;
-        font-size: 20px !important;
+        max-width: 350px;
+        padding: 18px !important;
+        font-size: 18px !important;
         display: block;
-        margin: 15px auto !important;
+        margin: 8px auto !important;
+        position: relative;
+        z-index: 999 !important; /* Por encima de ojos y partículas */
+        pointer-events: auto !important;
     }
 
-    /* Contenedor de cartas con scroll interno para que no empuje el botón de volver */
+    /* CONTENEDOR DE CARTAS: Solo aquí se permite scroll */
     .container {
-        max-height: 60vh !important; 
+        max-height: 55vh !important; 
         overflow-y: auto !important;
         display: flex !important;
         flex-wrap: wrap !important;
-        gap: 15px !important;
+        gap: 12px !important;
         padding: 15px !important;
         background: rgba(0,0,0,0.3);
         border-radius: 15px;
-        margin: 10px auto !important;
+        margin: 5px auto !important;
+        z-index: 10;
     }
 
-    /* Tamaño de cartas para que quepan bien */
+    /* Cartas más compactas para que no hagan scroll infinito */
     .card {
-        width: 140px !important;
-        height: 200px !important;
+        width: 130px !important;
+        height: 190px !important;
     }
 
     .monedas {
-        font-size: 22px !important;
-        z-index: 9999;
+        font-size: 20px !important;
         background: rgba(0,0,0,0.8);
-        border-radius: 30px;
-        padding: 10px 15px;
+        padding: 8px 12px;
     }
-}
+} /* <--- AQUÍ ESTABA EL ERROR: Faltaba esta llave en tu código */
 
-/* Ajustes para celulares muy pequeños (ej: iPhone SE) */
+/* Ajustes extra para celulares muy pequeños */
 @media (max-width: 400px) {
     .card {
-        width: 125px !important;
-        height: 180px !important;
+        width: 115px !important;
+        height: 170px !important;
     }
     
-    h1 { font-size: 26px !important; }
+    h1 { font-size: 24px !important; }
 
     button {
-        font-size: 18px !important;
-        padding: 16px !important;
+        font-size: 16px !important;
+        padding: 14px !important;
     }
 }
