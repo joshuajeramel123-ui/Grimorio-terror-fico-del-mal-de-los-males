@@ -663,10 +663,9 @@ RESPONSIVE CELULAR
     }
 
     #sobre button {
-        margin: 10px auto !important;
-        min-height: 60px; 
-        width: 85% !important;
-        z-index: 9999 !important; /* Vital para que el dedo lo detecte */
+       position: relative;
+    z-index: 9999 !important; /* Lo pone por encima de todo */
+    pointer-events: auto !important; /* Fuerza a que reciba el clic */
     }
 } /* <--- AQUÍ ESTABA EL ERROR: Faltaba esta llave en tu código */
 
