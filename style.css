@@ -18,9 +18,18 @@ cursor: url("img/dedo_cursor.png"), auto;
     min-height: 100vh;
     overflow-x: hidden;
 }
-/* Esta clase la activamos con JS solo en el Grimorio */
 body.con-scroll {
     overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+/* Esto quita la barra blanca fea de la derecha en muchos navegadores */
+body::-webkit-scrollbar {
+    width: 8px;
+}
+body::-webkit-scrollbar-thumb {
+    background: #7a00ff;
+    border-radius: 10px;
 }
 h1{
 font-size:55px;
@@ -369,15 +378,22 @@ animation: fondoRojoDios 0.6s ease;
 PARTICULAS MAGICAS
 ========================= */
 
-#particulas{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-pointer-events:none;
-overflow:hidden;
-z-index: 0;
+#particulas, #ojosOscuros {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* CAMBIO CLAVE: Esto permite que los clics "atraviesen" los ojos y toquen los botones */
+    pointer-events: none !important; 
+    z-index: 0; 
+}
+
+/* Asegúrate de que los botones siempre estén al frente */
+button, .card, .monedas {
+    position: relative;
+    z-index: 10 !important;
+    pointer-events: auto !important;
 }
 
 #inicio,
@@ -567,214 +583,79 @@ margin-top:30px;
 /* =========================
 RESPONSIVE CELULAR
 ========================= */
-@media (max-width:600px){
-
-h1{
-font-size:32px;
-}
-
-button{
-padding:12px 20px;
-font-size:14px;
-}
-
-.container{
-gap:15px;
-}
-
-.card{
-width:130px;
-height:190px;
-}
-
-.libro{
-width:95%;
-padding:20px;
-}
-
-.pagina{
-padding:15px;
-min-height:500px;
-}
-
-.monedas{
-font-size:14px;
-}
-
-}
-
-/* =========================
-RESPONSIVE TABLET
-========================= */
-
-@media (max-width:900px){
-
-h1{
-font-size:40px;
-}
-
-.container{
-gap:20px;
-}
-
-.card{
-width:150px;
-height:220px;
-}
-
-.libro{
-width:92%;
-}
-
-}
-
-/* =========================
-CURSOR PERSONALIZADO
-========================= */
-
-body{
-cursor: url("img/dedo_cursor.png"), auto;
-}
-
-button{
-cursor: url("img/dedo_cursor.png"), pointer;
-}
-.zoomCarta{
-transform:scale(1.2);
-z-index:1000;
-}
-
-/* =========================
-RESPONSIVE
-========================= */
-
-@media (max-width:768px){
-
-.container{
-grid-template-columns:repeat(2,1fr);
-}
-
-.card{
-width:140px;
-height:200px;
-}
-
-}
-
-@media (max-width:480px){
-
-.container{
-grid-template-columns:1fr;
-}
-
-.card{
-width:160px;
-height:220px;
-}
-
-}
-/* BUSCA ESTO EN TU CSS Y MODIFÍCALO */
-#inicio, #sobre {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    /* En móviles, a veces 100vh da problemas con la barra del navegador */
-    min-height: 100dvh; 
-    padding: 20px 0;
-    box-sizing: border-box;
-}
-
-/* Cuando estamos en el móvil, no centramos verticalmente para poder scrollear mejor */
-@media (max-width: 768px) {
-    #inicio, #sobre, #grimorio {
-        justify-content: flex-start;
-        padding-top: 80px; /* Espacio para que las monedas no tapen el título */
+/* ============================================================
+   CONFIGURACIÓN FINAL UNIFICADA PARA MÓVIL Y TABLET
+   ============================================================ */
+@media (max-width: 1024px) {
+    #sobre {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start !important;
+        padding-top: 20px !important;
+        gap: 10px; /* Separa los botones para que no se encimen */
     }
     
-    h1 {
-        font-size: 28px; /* Reducir el título para que no ocupe toda la pantalla */
-        margin-bottom: 30px;
+    /* Si el botón "Volver" se duplica o se ve mal, asegúrate de que no tenga márgenes locos */
+    #sobre button {
+        margin: 5px auto !important;
+        flex-shrink: 0; /* Evita que el botón se aplaste */
     }
 }
 
-#grimorio {
-    position: absolute; /* Permite que crezca hacia abajo */
-    top: 0;
-    left: 0;
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    z-index: 1;
-    padding-bottom: 50px;
-}
-
-.hidden {
-    display: none !important;
-}
-
-/* ============================================================
-   ADAPTACIÓN PARA CELULARES Y TABLETS
-   ============================================================ */
-
-@media (max-width: 1024px) {
-    /* Título más legible */
     h1 {
-        font-size: 38px !important;
+        font-size: 32px !important;
         padding: 0 10px;
-        line-height: 1.2;
     }
 
-    /* Botones más grandes para dedos */
+    /* Botones grandes y fáciles de tocar */
     button, .boton-magico {
-        width: 85%; /* Casi todo el ancho */
+        width: 85% !important;
         max-width: 400px;
-        padding: 22px !important; /* Más espacio interno */
-        font-size: 22px !important; /* Letra más grande */
+        padding: 20px !important;
+        font-size: 20px !important;
+        display: block;
         margin: 15px auto !important;
-        display: block; /* Uno debajo de otro */
     }
 
-    /* Ajuste de monedas en la esquina */
-    .monedas {
-        font-size: 24px !important;
-        top: 15px;
-        right: 15px;
-        background: rgba(0, 0, 0, 0.6);
-        padding: 8px 15px;
-        border-radius: 50px;
-    }
-
-    /* Cartas más grandes en el celular para que se vean bien */
-    .card {
-        width: 160px !important;
-        height: 230px !important;
-    }
-
-    /* Contenedor de cartas con mejor espacio */
-    .container, #grimorioContainer {
+    /* Contenedor de cartas con scroll interno para que no empuje el botón de volver */
+    .container {
+        max-height: 60vh !important; 
+        overflow-y: auto !important;
+        display: flex !important;
+        flex-wrap: wrap !important;
         gap: 15px !important;
-        padding: 20px 5px !important;
+        padding: 15px !important;
+        background: rgba(0,0,0,0.3);
+        border-radius: 15px;
+        margin: 10px auto !important;
+    }
+
+    /* Tamaño de cartas para que quepan bien */
+    .card {
+        width: 140px !important;
+        height: 200px !important;
+    }
+
+    .monedas {
+        font-size: 22px !important;
+        z-index: 9999;
+        background: rgba(0,0,0,0.8);
+        border-radius: 30px;
+        padding: 10px 15px;
     }
 }
 
-/* Ajustes extra para celulares muy pequeños */
-@media (max-width: 480px) {
-    h1 {
-        font-size: 28px !important;
+/* Ajustes para celulares muy pequeños (ej: iPhone SE) */
+@media (max-width: 400px) {
+    .card {
+        width: 125px !important;
+        height: 180px !important;
     }
+    
+    h1 { font-size: 26px !important; }
 
     button {
         font-size: 18px !important;
-        padding: 18px !important;
-    }
-
-    /* Las cartas se ponen en 2 columnas para que no se vean diminutas */
-    #grimorioContainer {
-        grid-template-columns: repeat(2, 1fr) !important;
-        justify-items: center;
+        padding: 16px !important;
     }
 }
