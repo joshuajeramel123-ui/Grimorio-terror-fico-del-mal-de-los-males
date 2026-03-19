@@ -80,7 +80,11 @@ overflow-y: auto;
 border-radius: 15px;
 background: rgba(0,0,0,0.2);
 }
-
+#grimorio .container {
+    max-height: 70vh; 
+    overflow-y: auto;
+    overflow-x: hidden;
+}
 
 .card{
 width:180px;
