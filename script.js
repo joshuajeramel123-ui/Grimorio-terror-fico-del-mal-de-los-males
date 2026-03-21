@@ -180,11 +180,20 @@ guardar();
 
 /*====================== Abrir sobre =============*/
 function abrirSobre(){
+    // 1. Forzar visibilidad de la pantalla de sobres
+    document.getElementById("inicio").classList.add("hidden");
+    document.getElementById("grimorio").classList.add("hidden");
+    
+    let pantallaSobre = document.getElementById("sobre");
+    pantallaSobre.classList.remove("hidden"); // Asegura que se vea
+    pantallaSobre.style.display = "flex";    // Forzado extra por si el CSS falla
+
 // 1. Quitamos el scroll para que la pantalla del sobre sea fija
     console.log("Intentando abrir sobre. Monedas actuales:", monedas);
     document.body.classList.remove("con-scroll");
     window.scrollTo({top: 0, left: 0, behavior: "instant"});
-    // Lógica de monedas (tu código original)
+    
+    // Lógica de monedas 
     if(!adminActivo){
         if(monedas < 10) return alert("No tienes suficientes monedas");
         monedas -= 10;
