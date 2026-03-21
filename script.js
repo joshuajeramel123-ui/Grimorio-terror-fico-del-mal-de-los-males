@@ -180,42 +180,35 @@ guardar();
 
 /*====================== Abrir sobre =============*/
 function abrirSobre(){
-    // 1. Forzar visibilidad de la pantalla de sobres
+
     document.getElementById("inicio").classList.add("hidden");
     document.getElementById("grimorio").classList.add("hidden");
-    
-    let pantallaSobre = document.getElementById("sobre");
-    pantallaSobre.classList.remove("hidden"); // Asegura que se vea
-    pantallaSobre.style.display = "flex";    // Forzado extra por si el CSS falla
 
-// 1. Quitamos el scroll para que la pantalla del sobre sea fija
+    let pantallaSobre = document.getElementById("sobre"); // ✅ SOLO UNA VEZ
+    pantallaSobre.classList.remove("hidden");
+    pantallaSobre.style.display = "flex";
+
     console.log("Intentando abrir sobre. Monedas actuales:", monedas);
+
     document.body.classList.remove("con-scroll");
     window.scrollTo({top: 0, left: 0, behavior: "instant"});
-    
-    // Lógica de monedas 
+
     if(!adminActivo){
         if(monedas < 10) return alert("No tienes suficientes monedas");
         monedas -= 10;
         guardar();
         actualizarContador();
-}
+    }
 
-// 2. Cambio de pantallas
-    document.getElementById("inicio").classList.add("hidden");
-    document.getElementById("grimorio").classList.add("hidden");
-    document.getElementById("sobre").classList.remove("hidden");
-    
-    let pantallaSobre = document.getElementById("sobre");
     pantallaSobre.classList.add("animar-sobre");
 
     setTimeout(() => {
         pantallaSobre.classList.remove("animar-sobre");
     }, 500);
 
-// 3. Generación de cartas (tu lógica de renderizado)
     let container = document.getElementById("cartasContainer");
     container.innerHTML = "";
+
     let generadas = [];
 
     for(let i = 0; i < 5; i++){
