@@ -687,3 +687,18 @@ RESPONSIVE CELULAR
         padding: 14px !important;
     }
 }
+
+/* Forzar que la pantalla activa siempre esté arriba */
+#inicio:not(.hidden), 
+#sobre:not(.hidden), 
+#grimorio:not(.hidden) {
+    display: flex !important;
+    z-index: 50; /* Por debajo de los botones pero por encima de los ojos de fondo */
+    position: relative;
+}
+
+/* Evitar que el contenedor de cartas del sobre bloquee clics */
+#cartasContainer {
+    pointer-events: auto !important;
+    min-height: 200px;
+}
