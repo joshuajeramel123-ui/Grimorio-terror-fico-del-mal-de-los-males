@@ -308,18 +308,22 @@ contador.innerText = "Cartas únicas: " + total + " / " + cartas.length;
 /*================== Es el grimorio de las cartas ============================*/
 
 function verGrimorio(){
-// 1. ACTIVAMOS EL SCROLL (importante para ver todas las cartas)
+    // 1. Resetear scroll y mostrar pantalla
+    window.scrollTo(0,0);
     document.body.classList.add("con-scroll");
-    window.scrollTo({top: 0, left: 0, behavior: "instant"});
-document.getElementById("inicio").classList.add("hidden");
+    
+    document.getElementById("inicio").classList.add("hidden");
     document.getElementById("sobre").classList.add("hidden");
     document.getElementById("grimorio").classList.remove("hidden");
-    document.getElementById("sobre").style.display = "none";
 
-let container = document.getElementById("grimorioContainer");
+    let container = document.getElementById("grimorioContainer");
     let containerDios = document.getElementById("grimorioDios");
+    
+    // Limpieza total antes de dibujar
     container.innerHTML = "";
     containerDios.innerHTML = "";
+
+    // ... (resto de tu lógica de ordenamiento de cartas)
 
 /* ORDEN DE RAREZA */
 const ordenRareza = {
