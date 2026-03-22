@@ -450,21 +450,35 @@ location.reload();
 let secreto="adameadmin";
 let buffer="";
 
-document.addEventListener("keydown",function(e){
-buffer+=e.key.toLowerCase();
-if(buffer.length>secreto.length){
-buffer=buffer.slice(-secreto.length);
-}
-if(buffer===secreto){
-adminActivo = true;
-localStorage.setItem("adminActivo","true");
-document.getElementById("adminPanel").classList.remove("hidden");
-actualizarMonedas();
- desbloquearTodas(); //
-buffer="";
-}
-});
+document.addEventListener("keydown", function(e) {
+    // Si presionas 'Escape', limpias el buffer por si te equivocaste
+    if (e.key === "Escape") {
+        buffer = "";
+        console.log("Buffer de admin reiniciado");
+        return;
+    }
 
+    buffer += e.key.toLowerCase();
+    
+    // Mantener el buffer del tamaño exacto de la palabra 'adameadmin'
+    if (buffer.length > secreto.length) {
+        buffer = buffer.slice(-secreto.length);
+    }
+    
+    if (buffer === secreto) {
+        console.log("¡MODO ADMIN ACTIVADO!");
+        adminActivo = true;
+        localStorage.setItem("adminActivo", "true");
+        
+        // Aseguramos que el panel se vea
+        const panel = document.getElementById("adminPanel");
+        if(panel) panel.classList.remove("hidden");
+        
+        actualizarMonedas();
+        desbloquearTodas();
+        buffer = ""; // Limpiar después de activar
+    }
+});
 document.addEventListener("mousemove", function(e){
 
     document.querySelectorAll("#sobre .card.maestra.flipped").forEach(card => {
