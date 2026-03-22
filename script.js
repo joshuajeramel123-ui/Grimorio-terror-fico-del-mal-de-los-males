@@ -4,9 +4,11 @@
 let grimorio = JSON.parse(localStorage.getItem("grimorio")) || {};
 let monedas = parseInt(localStorage.getItem("monedas")) || 0;
 let adminActivo = localStorage.getItem("adminActivo") === "true";
+const secreto = "adameadmin";
+let buffer = "";
 
 /* =========================
-   SISTEMA DE GUARDADO
+   SISTEMA DE GUARDADO Y UI
    ========================= */
 function guardar() {
     if (!adminActivo) {
@@ -21,13 +23,6 @@ function actualizarMonedas() {
     if (display) {
         display.innerText = adminActivo ? "∞" : monedas;
     }
-}
-
-// Inicialización rápida
-actualizarMonedas();
-if (adminActivo) {
-    const panel = document.getElementById("adminPanel");
-    if (panel) panel.classList.remove("hidden");
 }
 
 /* =========================
@@ -156,7 +151,7 @@ const cartas = [
 ];
 
 /* =========================
-   SISTEMA DE PROBABILIDADES
+   PROBABILIDADES
    ========================= */
 function generarRareza() {
     if (adminActivo) {
@@ -173,7 +168,7 @@ function generarRareza() {
 }
 
 /* =========================
-   ACCIONES
+   ACCIONES PRINCIPALES
    ========================= */
 function ganarMonedas() {
     if (adminActivo) return;
@@ -184,6 +179,7 @@ function ganarMonedas() {
 function abrirSobre() {
     if (!adminActivo && monedas < 10) return alert("No tienes suficientes monedas");
 
+    // Cambiar pantallas
     document.getElementById("inicio").classList.add("hidden");
     document.getElementById("grimorio").classList.add("hidden");
     let pantallaSobre = document.getElementById("sobre");
@@ -194,9 +190,6 @@ function abrirSobre() {
         monedas -= 10;
         guardar();
     }
-
-    pantallaSobre.classList.add("animar-sobre");
-    setTimeout(() => pantallaSobre.classList.remove("animar-sobre"), 500);
 
     let container = document.getElementById("cartasContainer");
     container.innerHTML = "";
@@ -209,12 +202,14 @@ function abrirSobre() {
 
         let carta = posibles[Math.floor(Math.random() * posibles.length)];
 
+        // Guardar en grimorio
         if (!grimorio[carta.imagen]) {
             grimorio[carta.imagen] = { ...carta, cantidad: 1 };
         } else {
             grimorio[carta.imagen].cantidad++;
         }
 
+        // Crear elemento de carta
         let div = document.createElement("div");
         div.className = "card";
         div.innerHTML = `
@@ -231,14 +226,15 @@ function abrirSobre() {
 
     guardar();
 
+    // Animación de revelado secuencial
     generadas.forEach((c, index) => {
         setTimeout(() => {
             c.element.classList.add("flipped", "revealed", c.rare);
             if (c.rare === "dios") {
-                document.body.classList.add("sacudida", "fondo-dios");
-                setTimeout(() => document.body.classList.remove("sacudida", "fondo-dios"), 1000);
+                document.body.classList.add("sacudida");
+                setTimeout(() => document.body.classList.remove("sacudida"), 1000);
             }
-        }, 300 * (index + 1));
+        }, 400 * (index + 1));
     });
 }
 
@@ -262,17 +258,14 @@ function verGrimorio() {
     let misCartas = Object.values(grimorio);
 
     if (misCartas.length === 0) {
-        container.innerHTML = "<p style='color:white; text-align:center;'>Aún no tienes cartas. ¡Abre algunos sobres!</p>";
+        container.innerHTML = "<p style='color:white; grid-column: 1/-1;'>Aún no tienes cartas. ¡Abre algunos sobres!</p>";
         return;
     }
 
     const orden = { "normal": 1, "especial": 2, "raro": 3, "legendaria": 4, "maestra": 5, "dios": 6 };
     misCartas.sort((a, b) => (orden[a.rareza] || 0) - (orden[b.rareza] || 0));
 
-    let totalUnicas = 0;
-
     misCartas.forEach(c => {
-        totalUnicas++;
         let div = document.createElement("div");
         div.className = `card revealed ${c.rareza}`; 
 
@@ -293,11 +286,11 @@ function verGrimorio() {
         }
     });
 
-    document.getElementById("contador").innerText = `Cartas únicas: ${totalUnicas} / ${cartas.length}`;
+    document.getElementById("contador").innerText = `Cartas únicas: ${misCartas.length} / ${cartas.length}`;
 }
 
 /* =========================
-   UTILIDADES
+   UTILIDADES Y ADMIN
    ========================= */
 function verCartaGrande(src) {
     let visor = document.getElementById("visorCarta");
@@ -320,10 +313,14 @@ function volverInicio() {
 
 function desbloquearTodas() {
     cartas.forEach(c => {
-        if (!grimorio[c.imagen]) grimorio[c.imagen] = { ...c, cantidad: 1 };
+        if (!grimorio[c.imagen]) {
+            grimorio[c.imagen] = { ...c, cantidad: 1 };
+        }
     });
     guardar();
-    verGrimorio();
+    if (!document.getElementById("grimorio").classList.contains("hidden")) {
+        verGrimorio();
+    }
 }
 
 function salirAdmin() {
@@ -341,43 +338,78 @@ function reiniciarTodo() {
 }
 
 /* =========================
-   EVENTOS Y EFECTOS
+   EFECTOS VISUALES (OJOS Y PARTÍCULAS)
    ========================= */
-let secreto = "adameadmin";
-let buffer = "";
-document.addEventListener("keydown", (e) => {
-    buffer += e.key.toLowerCase();
-    if (buffer.length > secreto.length) buffer = buffer.slice(-secreto.length);
-    if (buffer === secreto) {
-        adminActivo = true;
-        localStorage.setItem("adminActivo", "true");
-        document.getElementById("adminPanel").classList.remove("hidden");
-        actualizarMonedas();
-        desbloquearTodas();
-    }
-});
+function crearOjosFondo() {
+    const contenedor = document.getElementById("ojosOscuros");
+    if (!contenedor) return;
+    contenedor.innerHTML = "";
 
+    for (let i = 0; i < 15; i++) {
+        const ojo = document.createElement("div");
+        ojo.className = "ojo-oscuro";
+        ojo.style.top = Math.random() * 90 + "vh";
+        ojo.style.left = Math.random() * 95 + "vw";
+        ojo.style.animationDelay = Math.random() * 5 + "s";
+
+        const pupila = document.createElement("div");
+        pupila.className = "pupila-oscura";
+        ojo.appendChild(pupila);
+        contenedor.appendChild(ojo);
+    }
+}
+
+// Seguimiento de ojos
 document.addEventListener("mousemove", (e) => {
     document.querySelectorAll(".pupila, .pupila-oscura").forEach(p => {
         let rect = p.getBoundingClientRect();
         let x = rect.left + rect.width / 2;
         let y = rect.top + rect.height / 2;
         let angle = Math.atan2(e.clientY - y, e.clientX - x);
-        p.style.transform = `translate(${Math.cos(angle) * 10}px, ${Math.sin(angle) * 10}px)`;
+        let dist = 8; // Qué tanto se mueve la pupila
+        p.style.transform = `translate(${Math.cos(angle) * dist}px, ${Math.sin(angle) * dist}px)`;
     });
 });
 
-window.addEventListener("load", () => {
+// Partículas
+function iniciarParticulas() {
     const contenedor = document.getElementById("particulas");
     if (!contenedor) return;
     setInterval(() => {
         const p = document.createElement("div");
         p.className = "particula";
         p.style.left = Math.random() * 100 + "vw";
-        let size = Math.random() * 6 + 2;
-        p.style.width = size + "px"; p.style.height = size + "px";
-        p.style.animationDuration = (Math.random() * 5 + 5) + "s";
+        let size = Math.random() * 5 + 2;
+        p.style.width = size + "px"; 
+        p.style.height = size + "px";
+        p.style.animationDuration = (Math.random() * 3 + 4) + "s";
         contenedor.appendChild(p);
-        setTimeout(() => p.remove(), 8000);
-    }, 300);
+        setTimeout(() => p.remove(), 7000);
+    }, 400);
+}
+
+/* =========================
+   INICIALIZACIÓN Y EVENTOS
+   ========================= */
+window.addEventListener("load", () => {
+    actualizarMonedas();
+    crearOjosFondo();
+    iniciarParticulas();
+    
+    if (adminActivo) {
+        document.getElementById("adminPanel")?.classList.remove("hidden");
+    }
+});
+
+document.addEventListener("keydown", (e) => {
+    buffer += e.key.toLowerCase();
+    if (buffer.length > secreto.length) buffer = buffer.slice(-secreto.length);
+    if (buffer === secreto) {
+        adminActivo = true;
+        localStorage.setItem("adminActivo", "true");
+        document.getElementById("adminPanel")?.classList.remove("hidden");
+        actualizarMonedas();
+        desbloquearTodas();
+        alert("Modo Admin Activado");
+    }
 });
