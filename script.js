@@ -164,7 +164,7 @@ function generarRareza() {
         return rands[Math.floor(Math.random() * rands.length)];
     }
     let r = Math.random();
-    if (r < 0.0005) return "dios"; // Ajustado a algo real
+    if (r < 0.0005) return "dios";
     if (r < 0.02) return "maestra";
     if (r < 0.08) return "legendaria";
     if (r < 0.25) return "raro";
@@ -184,20 +184,17 @@ function ganarMonedas() {
 function abrirSobre() {
     if (!adminActivo && monedas < 10) return alert("No tienes suficientes monedas");
 
-    // Limpiar pantalla
     document.getElementById("inicio").classList.add("hidden");
     document.getElementById("grimorio").classList.add("hidden");
     let pantallaSobre = document.getElementById("sobre");
     pantallaSobre.classList.remove("hidden");
     pantallaSobre.style.display = "flex";
 
-    // Cobrar
     if (!adminActivo) {
         monedas -= 10;
         guardar();
     }
 
-    // Animación
     pantallaSobre.classList.add("animar-sobre");
     setTimeout(() => pantallaSobre.classList.remove("animar-sobre"), 500);
 
@@ -212,7 +209,6 @@ function abrirSobre() {
 
         let carta = posibles[Math.floor(Math.random() * posibles.length)];
 
-        // Guardar en grimorio
         if (!grimorio[carta.imagen]) {
             grimorio[carta.imagen] = { ...carta, cantidad: 1 };
         } else {
@@ -235,7 +231,6 @@ function abrirSobre() {
 
     guardar();
 
-    // Revelado secuencial
     generadas.forEach((c, index) => {
         setTimeout(() => {
             c.element.classList.add("flipped", "revealed", c.rare);
@@ -248,10 +243,9 @@ function abrirSobre() {
 }
 
 /* =========================
-   GRIMORIO (CORREGIDO)
+   GRIMORIO
    ========================= */
 function verGrimorio() {
-    // 1. Preparar la pantalla
     window.scrollTo(0, 0);
     document.body.classList.add("con-scroll");
     
@@ -262,11 +256,9 @@ function verGrimorio() {
     let container = document.getElementById("grimorioContainer");
     let containerDios = document.getElementById("grimorioDios");
     
-    // Limpiar antes de dibujar
     container.innerHTML = "";
     containerDios.innerHTML = "";
 
-    // 2. Obtener las cartas que posees
     let misCartas = Object.values(grimorio);
 
     if (misCartas.length === 0) {
@@ -274,18 +266,14 @@ function verGrimorio() {
         return;
     }
 
-    // 3. Ordenar por rareza
     const orden = { "normal": 1, "especial": 2, "raro": 3, "legendaria": 4, "maestra": 5, "dios": 6 };
     misCartas.sort((a, b) => (orden[a.rareza] || 0) - (orden[b.rareza] || 0));
 
     let totalUnicas = 0;
 
-    // 4. Dibujar cada carta
     misCartas.forEach(c => {
         totalUnicas++;
-
         let div = document.createElement("div");
-        // Usamos 'revealed' para que se vea la imagen de inmediato
         div.className = `card revealed ${c.rareza}`; 
 
         div.innerHTML = `
@@ -305,9 +293,6 @@ function verGrimorio() {
         }
     });
 
-    // 5. Actualizar contador
-    document.getElementById("contador").innerText = `Cartas únicas: ${totalUnicas} / ${cartas.length}`;
-}
     document.getElementById("contador").innerText = `Cartas únicas: ${totalUnicas} / ${cartas.length}`;
 }
 
@@ -358,7 +343,6 @@ function reiniciarTodo() {
 /* =========================
    EVENTOS Y EFECTOS
    ========================= */
-// Activar Admin
 let secreto = "adameadmin";
 let buffer = "";
 document.addEventListener("keydown", (e) => {
@@ -373,7 +357,6 @@ document.addEventListener("keydown", (e) => {
     }
 });
 
-// Ojos que siguen el mouse
 document.addEventListener("mousemove", (e) => {
     document.querySelectorAll(".pupila, .pupila-oscura").forEach(p => {
         let rect = p.getBoundingClientRect();
@@ -384,7 +367,6 @@ document.addEventListener("mousemove", (e) => {
     });
 });
 
-// Partículas
 window.addEventListener("load", () => {
     const contenedor = document.getElementById("particulas");
     if (!contenedor) return;
