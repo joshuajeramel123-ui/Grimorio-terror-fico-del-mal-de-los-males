@@ -180,9 +180,12 @@ guardar();
 
 /*====================== Abrir sobre =============*/
 function abrirSobre(){
-
+    
+    if(document.getElementById("grimorio").classList.contains("hidden") === false){
+        return; // ❌ Evita abrir sobres dentro del grimorio
     document.getElementById("inicio").classList.add("hidden");
     document.getElementById("grimorio").classList.add("hidden");
+    
 
     let pantallaSobre = document.getElementById("sobre"); // ✅ SOLO UNA VEZ
     pantallaSobre.classList.remove("hidden");
@@ -317,6 +320,7 @@ function verGrimorio(){
 document.getElementById("inicio").classList.add("hidden");
     document.getElementById("sobre").classList.add("hidden");
     document.getElementById("grimorio").classList.remove("hidden");
+    document.getElementById("sobre").style.display = "none";
 
 let container = document.getElementById("grimorioContainer");
     let containerDios = document.getElementById("grimorioDios");
