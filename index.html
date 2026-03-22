@@ -1,97 +1,84 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Grimorio Prohibido Del Mal</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Grimorio Prohibido Del Mal</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Gveret+Levin&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="style.css">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gveret+Levin&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div id="particulas"></div>
-<div id="ojosOscuros"></div>
-<div class="ojos-creepy">
-  <div class="ojo">
-    <div class="pupila"></div>
-  </div>
-  <div class="ojo">
-    <div class="pupila"></div>
-  </div>
-</div>
-<div class="monedas">💰 <span id="monedas">0</span></div>
-
-<div id="inicio">
-      <h1>📖 ᎶᏒᛨᛗᛜᏒᛨᛜ ᚹᏒᛜꖾᛨƂᛨDᛜ 👻</h1>
-
-     <button class="boton-magico" onclick="event.stopPropagation(); abrirSobre()">
-           <span>Abrir Sobre (10 💰)</span>
-      </button>
-
-      <button class="boton-magico" onclick="event.stopPropagation(); verGrimorio()">
-           <span>Ver Grimorio</span>
-      </button>
-
-      <button class="boton-magico" onclick="ganarMonedas()">
-            <span>Ganar monedas</span>
-      </button>
-  <div id="adminPanel" class="hidden admin">
-        <button onclick="reiniciarTodo()">Reset</button>
-        <button onclick="salirAdmin()">Salir Admin</button>
+    <div id="particulas"></div>
+    <div id="ojosOscuros"></div>
+    
+    <div class="ojos-creepy">
+        <div class="ojo"><div class="pupila"></div></div>
+        <div class="ojo"><div class="pupila"></div></div>
     </div>
-</div>
 
-<div id="sobre" class="hidden">
-<h1>Abriendo Sobre</h1>
+    <div class="monedas">💰 <span id="monedas">0</span></div>
 
-<div class="container" id="cartasContainer"></div>
+    <div id="inicio">
+        <h1>📖 ᎶᏒᛨᛗᛜᏒᛨᛜ ᚹᏒᛜꖾᛨƂᛨDᛜ 👻</h1>
 
-<button class="boton-magico" onclick="event.stopPropagation(); abrirSobre()">
-<span>Abrir otro sobre</span>
-</button>
+        <button class="boton-magico" onclick="abrirSobre()">
+            <span>Abrir Sobre (10 💰)</span>
+        </button>
 
-<button class="boton-magico" onclick="event.stopPropagation(); volverInicio()">
-<span>Volver</span>
-</button>
-</div>
+        <button class="boton-magico" onclick="verGrimorio()">
+            <span>Ver Grimorio</span>
+        </button>
 
-<div id="grimorio" class="hidden">
+        <button class="boton-magico" onclick="ganarMonedas()">
+            <span>Ganar monedas</span>
+        </button>
 
-<h1>GRIMORIO PROHIBIDO</h1>
+        <div id="adminPanel" class="hidden admin">
+            <button onclick="reiniciarTodo()">Reset</button>
+            <button onclick="salirAdmin()">Salir Admin</button>
+            <button onclick="desbloquearTodas()">Full Cartas</button>
+        </div>
+    </div>
 
-<h3 id="contador"></h3>
+    <div id="sobre" class="hidden">
+        <h1>Abriendo Sobre</h1>
+        <div class="container" id="cartasContainer"></div>
 
-<h2>🔥 CARTAS DIOS 🔥</h2>
-<div class="container" id="grimorioDios"></div>
+        <div class="controles-sobre">
+            <button class="boton-magico" onclick="abrirSobre()">
+                <span>Abrir otro sobre</span>
+            </button>
+            <button class="boton-magico" onclick="volverInicio()">
+                <span>Volver</span>
+            </button>
+        </div>
+    </div>
 
-<h2>📚 RESTO DE CARTAS</h2>
-<div class="container" id="grimorioContainer"></div>
+    <div id="grimorio" class="hidden">
+        <h1>GRIMORIO PROHIBIDO</h1>
+        <h3 id="contador">Cartas únicas: 0 / 0</h3>
 
+        <h2>🔥 CARTAS DIOS 🔥</h2>
+        <div class="container" id="grimorioDios"></div>
 
-<button class="boton-magico" onclick="volverInicio()">
-<span>Volver</span>
-</button>
+        <h2>📚 RESTO DE CARTAS</h2>
+        <div class="container" id="grimorioContainer"></div>
 
-</div>
+        <button class="boton-magico" onclick="volverInicio()">
+            <span>Volver al Inicio</span>
+        </button>
+    </div>
 
-<div id="visorCarta" class="visor" onclick="cerrarVisor()">
-<img id="imagenGrande">
-</div>
+    <div id="visorCarta" class="visor" onclick="cerrarVisor()">
+        <img id="imagenGrande" src="">
+    </div>
 
-<!-- PANEL ADMIN -->
-<!--div id="adminPanel" class="hidden admin">
-<button onclick="reiniciarTodo()">Reset</button>
-<button onclick="salirAdmin()">Salir Admin</button>
-</div-->
-
-<script src="script.js"></script>
-
+    <script src="script.js"></script>
 
 </body>
 </html>
