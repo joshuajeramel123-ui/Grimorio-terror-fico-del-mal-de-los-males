@@ -625,17 +625,44 @@ RESPONSIVE CELULAR
         overflow: hidden;
         display: flex;
         flex-direction: column;
+        justify-content: center; /* Centra el contenido verticalmente */
+        align-items: center;
     }
 
+    /* CONTENEDOR DE CARTAS: Ajuste para que no se pegue al techo */
     .container {
-        flex: 1;
-        max-height: 65vh !important; 
-        overflow-y: scroll !important;
+        flex: none; /* Cambiado de 1 para evitar que empuje todo */
+        width: 95%;
+        max-height: 60vh !important; 
+        overflow-y: auto !important;
         -webkit-overflow-scrolling: touch;
+        margin: 20px auto !important;
+        padding: 15px !important;
+        background: rgba(0,0,0,0.4);
+        border-radius: 15px;
         z-index: 10;
-        margin-bottom: 20px !important;
     }
-} /* ← ESTA LLAVE ES CLAVE */
+
+    /* Cartas más compactas */
+    .card {
+        width: 130px !important;
+        height: 190px !important;
+    }
+
+    button {
+        width: 85% !important;
+        max-width: 350px;
+        padding: 15px !important;
+        margin: 10px auto !important;
+        z-index: 999 !important;
+        position: relative;
+    }
+
+    #sobre {
+        padding-top: 20px !important; /* Menos espacio arriba */
+        justify-content: center !important;
+    }
+} /* AQUÍ SE CIERRA EL MEDIA QUERY CORRECTAMENTE */
     /* Título ajustado */
     h1 {
         font-size: 30px !important;
