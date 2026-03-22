@@ -181,8 +181,8 @@ guardar();
 /*====================== Abrir sobre =============*/
 function abrirSobre(){
     
-    if(document.getElementById("grimorio").classList.contains("hidden") === false){
-        return; // ❌ Evita abrir sobres dentro del grimorio
+    //if(document.getElementById("grimorio").classList.contains("hidden") === false){
+      //  return; // ❌ Evita abrir sobres dentro del grimorio
     document.getElementById("inicio").classList.add("hidden");
     document.getElementById("grimorio").classList.add("hidden");
     
