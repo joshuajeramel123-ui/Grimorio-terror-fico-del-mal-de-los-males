@@ -251,37 +251,63 @@ function abrirSobre() {
    GRIMORIO (CORREGIDO)
    ========================= */
 function verGrimorio() {
+    // 1. Preparar la pantalla
     window.scrollTo(0, 0);
     document.body.classList.add("con-scroll");
+    
     document.getElementById("inicio").classList.add("hidden");
     document.getElementById("sobre").classList.add("hidden");
     document.getElementById("grimorio").classList.remove("hidden");
 
     let container = document.getElementById("grimorioContainer");
     let containerDios = document.getElementById("grimorioDios");
+    
+    // Limpiar antes de dibujar
     container.innerHTML = "";
     containerDios.innerHTML = "";
 
-    const ordenRareza = { normal: 1, especial: 2, raro: 3, legendaria: 4, maestra: 5, dios: 6 };
+    // 2. Obtener las cartas que posees
+    let misCartas = Object.values(grimorio);
 
-    let cartasArray = Object.values(grimorio).sort((a, b) => ordenRareza[a.rareza] - ordenRareza[b.rareza]);
+    if (misCartas.length === 0) {
+        container.innerHTML = "<p style='color:white; text-align:center;'>Aún no tienes cartas. ¡Abre algunos sobres!</p>";
+        return;
+    }
+
+    // 3. Ordenar por rareza
+    const orden = { "normal": 1, "especial": 2, "raro": 3, "legendaria": 4, "maestra": 5, "dios": 6 };
+    misCartas.sort((a, b) => (orden[a.rareza] || 0) - (orden[b.rareza] || 0));
+
     let totalUnicas = 0;
 
-    cartasArray.forEach(c => {
+    // 4. Dibujar cada carta
+    misCartas.forEach(c => {
         totalUnicas++;
+
         let div = document.createElement("div");
-        div.className = "card revealed " + c.rareza;
+        // Usamos 'revealed' para que se vea la imagen de inmediato
+        div.className = `card revealed ${c.rareza}`; 
+
         div.innerHTML = `
-            <div class="card-back">
-                <div class="stack">x${c.cantidad}</div>
-                <img src="${c.imagen}" class="img-carta" onclick="verCartaGrande('${c.imagen}')">
-                <div class="rareza-label">${c.rareza.toUpperCase()}</div>
-            </div>`;
-        
-        if (c.rareza === "dios") containerDios.appendChild(div);
-        else container.appendChild(div);
+            <div class="card-inner">
+                <div class="card-back">
+                    <div class="stack">x${c.cantidad}</div>
+                    <img src="${c.imagen}" class="img-carta" onclick="verCartaGrande('${c.imagen}')">
+                    <div class="rareza-label">${c.rareza.toUpperCase()}</div>
+                </div>
+            </div>
+        `;
+
+        if (c.rareza === "dios") {
+            containerDios.appendChild(div);
+        } else {
+            container.appendChild(div);
+        }
     });
 
+    // 5. Actualizar contador
+    document.getElementById("contador").innerText = `Cartas únicas: ${totalUnicas} / ${cartas.length}`;
+}
     document.getElementById("contador").innerText = `Cartas únicas: ${totalUnicas} / ${cartas.length}`;
 }
 
