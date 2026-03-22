@@ -1,750 +1,197 @@
-body{
-margin:0;
-overflow:hidden;
-overflow-y: hidden; /* Evita scroll en Inicio y Sobre */
-font-family: 'Poppins', sans-serif;
-
-background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
-url("img/new_photo_fondo.jpeg");
-background-size: cover;
-background-position: center;
-background-repeat: no-repeat;
-background-attachment: fixed;
-color:white;
-text-align:center;
-animation: moverGalaxia 120s linear infinite;
-cursor: url("img/dedo_cursor.png"), auto;
-/* Esto permite que la página crezca si hay muchas cartas */
-    min-height: 100vh;
+/* =========================================
+   CONFIGURACIÓN BASE Y FONDO
+   ========================================= */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url("img/new_photo_fondo.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: white;
+    text-align: center;
+    animation: moverGalaxia 120s linear infinite;
+    cursor: url("img/dedo_cursor.png"), auto;
+    min-height: 100dvh;
     overflow-x: hidden;
+    overflow-y: hidden; /* Evita scroll por defecto */
 }
+
 body.con-scroll {
     overflow-y: auto !important;
-    overflow-x: hidden !important;
 }
 
-/* Esto quita la barra blanca fea de la derecha en muchos navegadores */
-body::-webkit-scrollbar {
-    width: 8px;
-}
-body::-webkit-scrollbar-thumb {
-    background: #7a00ff;
-    border-radius: 10px;
-}
-h1{
-font-size:55px;
-text-shadow:0 0 25px purple;
+/* Scrollbar personalizada */
+body::-webkit-scrollbar { width: 8px; }
+body::-webkit-scrollbar-thumb { background: #7a00ff; border-radius: 10px; }
+
+h1 {
+    font-size: clamp(30px, 8vw, 55px);
+    text-shadow: 0 0 25px purple;
+    margin: 20px 0;
 }
 
-button{
-padding:16px 40px;
-font-size:18px;
-font-family:"Gveret Levin", cursive;
-color:white;
-background:linear-gradient(145deg,#2b0033,#0a0010);
-border:2px solid #7a00ff;
-border-radius:12px;
-cursor:pointer;
-margin:12px;
-transition:all 0.3s ease;
-box-shadow:
-0 0 10px #7a00ff,
-inset 0 0 10px rgba(255,255,255,0.1);
+/* =========================================
+   SISTEMA DE CAPAS (Z-INDEX) - EL ARREGLO
+   ========================================= */
+#ojosOscuros, #particulas, .particula, .ojo-oscuro {
+    position: fixed !important;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -1 !important; /* Siempre al fondo */
+    pointer-events: none !important; 
 }
 
-button:hover{
-transform:scale(1.08);
-box-shadow:
-0 0 20px #b300ff,
-0 0 40px #7a00ff;
-}
-
-button:active{
-transform:scale(0.95);
-box-shadow:
-0 0 5px #7a00ff;
-}
-
-.container{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:25px;
-margin:40px auto;
-max-width:1200px;
-padding:10px;
-
-/* En celulares, si hay muchas cartas, permite scrollear dentro */
-max-height: 70vh; 
-overflow-y: auto;
-border-radius: 15px;
-background: rgba(0,0,0,0.2);
-}
-#grimorio .container {
-    max-height: 70vh; 
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
-.card{
-width:180px;
-height:260px;
-border-radius:15px;
-position:relative;
-perspective:1000px;
-}
-
-.card-inner{
-position:relative;
-width:100%;
-height:100%;
-transform-style:preserve-3d;
-transition:0.3s;
-}
-
-.card.flipped .card-inner{
-transform:rotateY(180deg);
-}
-
-.card-front{
-position:absolute;
-width:100%;
-height:100%;
-border-radius:15px;
-background:#111;
-display:flex;
-justify-content:center;
-align-items:center;
-backface-visibility:hidden;
-font-size:40px;
-}
-
-.card-back{
-position:absolute;
-width:100%;
-height:100%;
-border-radius:15px;
-/* transform:rotateY(180deg); */
-background:#222;
-display:flex;
-flex-direction:column;
-justify-content:space-between;
-align-items:center;
-backface-visibility:hidden;
-overflow:hidden;
-}
-
-/* SOLO cuando está dentro del sobre */
-.card-inner .card-back{
-transform: rotateY(180deg);
-}
-
-.img-carta{
-width:100%;
-height:85%;
-object-fit:cover;
-}
-
-.rareza-label{
-width:100%;
-padding:5px;
-font-weight:bold;
-background:black;
-}
-
-.card.revealed.normal{ box-shadow:0 0 10px gray; }
-.card.revealed.especial{ box-shadow:0 0 25px cyan; }
-.card.revealed.raro{ box-shadow:0 0 30px blue; }
-.card.revealed.legendaria{ box-shadow:0 0 45px gold; }
-.card.revealed.maestra{ box-shadow:0 0 55px white; }
-.card.revealed.dios{ box-shadow:0 0 70px red; } /* ARREGLADO */
-.card.revealed{
-animation: flotarCarta 6s ease-in-out infinite;
-}
-/* Más rápido para legendaria */
-.card.revealed.legendaria{
-animation: flotarCarta 4s ease-in-out infinite;
-}
-
-/* Más intenso para dios */
-.card.revealed.dios{
-animation: flotarCarta 2.5s ease-in-out infinite;
-}
-.stack{
-position:absolute;
-top:5px;
-left:5px;
-font-size:12px;
-background:black;
-padding:2px 6px;
-border-radius:5px;
-}
-
-.hidden{ 
-display:none; 
-}
-
-#inicio {
+#inicio, #sobre, #grimorio {
+    position: relative;
+    z-index: 10;
+    min-height: 100dvh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100dvh; 
-    padding: 20px;
-    box-sizing: border-box;
-    
-    /* ESTO ES LO QUE ARREGLA EL PROBLEMA DE LOS OJOS */
-    position: relative;
-    z-index: 10; 
 }
 
-/* El panel de admin también debe crecer en móvil */
-.admin {
+.hidden { display: none !important; }
+
+/* =========================================
+   BOTONES (SIEMPRE CLICKABLES)
+   ========================================= */
+button {
+    padding: 16px 40px;
+    font-size: 18px;
+    font-family: "Gveret Levin", cursive;
+    color: white;
+    background: linear-gradient(145deg, #2b0033, #0a0010);
+    border: 2px solid #7a00ff;
+    border-radius: 12px;
+    cursor: pointer !important;
+    margin: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px #7a00ff;
     position: relative;
-    margin-top: 40px;
-    flex-direction: column; /* Botones de admin uno sobre otro en móvil */
-    align-items: center;
-    width: 100%;
+    z-index: 100 !important;
+    pointer-events: auto !important;
 }
 
-.admin button {
-    width: 60% !important;
-    padding: 12px !important;
-    font-size: 16px !important;
-}
-.monedas{
-position: fixed;
-    top: 10px;
-    right: 10px;
-    font-size: 20px; /* Un poco más grande para que sea legible */
-    z-index: 9999; /* Máxima prioridad */
-    background: rgba(0, 0, 0, 0.5); /* Fondo semitransparente para que resalte */
-    padding: 5px 10px;
+button:hover { transform: scale(1.08); box-shadow: 0 0 20px #b300ff; }
+button:active { transform: scale(0.95); }
+
+.monedas {
+    position: fixed;
+    top: 10px; right: 10px;
+    font-size: 20px;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 8px 15px;
     border-radius: 10px;
-    pointer-events: none; /* Para que no estorbe si quieres picar algo abajo */
-}
-  .visor{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.8);
-display:none;
-justify-content:center;
-align-items:center;
-z-index:999;
+    border: 1px solid #7a00ff;
 }
 
-.visor.activo{
-display:flex; /* 👈 SOLO cuando está activo */
+/* =========================================
+   CONTENEDOR DE CARTAS
+   ========================================= */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 20px;
+    /* Para que el grimorio no se pegue arriba */
+    min-height: 200px;
 }
 
-.visor img{
-max-width:90%;
-max-height:90%;
-border-radius:15px;
-box-shadow:0 0 60px 20px gold;
-}
-/* =========================
-ANIMACIÓN SOBRE ÉPICO
-========================= */
-
-@keyframes aparecerSobre {
-0% { transform: scale(0.5); opacity:0; }
-100% { transform: scale(1); opacity:1; }
-}
-
-@keyframes destelloMagico {
-0% { box-shadow:0 0 0px purple; }
-50% { box-shadow:0 0 80px 20px magenta; }
-100% { box-shadow:0 0 0px purple; }
-}
-
-@keyframes cartaAparece {
-0% { transform: scale(0) rotateY(180deg); opacity:0; }
-100% { transform: scale(1) rotateY(180deg); opacity:1; }
-}
-
-@keyframes sacudir {
-0% { transform: translateX(0); }
-25% { transform: translateX(-10px); }
-50% { transform: translateX(10px); }
-75% { transform: translateX(-10px); }
-100% { transform: translateX(0); }
-}
-
-@keyframes moverGalaxia {
-0%{
-background-position: 0% 0%;
-}
-25%{
-background-position: 30% 20%;
-}
-50%{
-background-position: 60% 40%;
-}
-75%{
-background-position: 30% 60%;
-}
-100%{
-background-position: 0% 0%;
-}
-}
-
-
-@keyframes flotarCarta {
-0%   { transform: translate(0px, 0px); }
-25%  { transform: translate(2px, -3px); }
-50%  { transform: translate(-2px, 2px); }
-75%  { transform: translate(3px, 1px); }
-100% { transform: translate(0px, 0px); }
-}
-
-@keyframes brilloBoton{
-0%{ box-shadow:0 0 10px #ff00ff; }
-50%{ box-shadow:0 0 25px #ff00ff; }
-100%{ box-shadow:0 0 10px #ff00ff; }
-}
-/* Clase activadora */
-.animar-sobre{
-animation: aparecerSobre 0.5s ease;
-}
-
-.brillo-magico{
-animation: destelloMagico 1s ease;
-}
-
-.carta-epica{
-animation: cartaAparece 0.4s ease forwards;
-}
-
-.sacudida{
-animation: sacudir 0.5s ease;
-}
-
-/* =========================
-EFECTOS NIVEL DIABLO
-========================= */
-
-@keyframes brilloLegendaria {
-0% { box-shadow:0 0 10px gold; }
-50% { box-shadow:0 0 80px 30px gold; }
-100% { box-shadow:0 0 10px gold; }
-}
-
-@keyframes brilloMaestra {
-0% { box-shadow:0 0 10px white; }
-50% { box-shadow:0 0 90px 40px white; }
-100% { box-shadow:0 0 10px white; }
-}
-
-@keyframes fondoRojoDios {
-0% { background:#000; }
-50% { background:#500; }
-100% { background:#000; }
-}
-
-.legendaria-efecto{
-animation: brilloLegendaria 1s ease;
-}
-
-.maestra-efecto{
-animation: brilloMaestra 1s ease;
-}
-
-.fondo-dios{
-animation: fondoRojoDios 0.6s ease;
-}
-/* =========================
-   EFECTO 3D MAESTRA
-========================= */
-
-.card.maestra{
+/* =========================================
+   CARTAS Y ANIMACIONES
+   ========================================= */
+.card {
+    width: 160px;
+    height: 230px;
     perspective: 1000px;
 }
 
-.card.maestra .card-inner{
+.card-inner {
+    position: relative;
+    width: 100%; height: 100%;
     transform-style: preserve-3d;
-    transition: transform 0.2s ease;
+    transition: 0.6s;
 }
 
-.card.maestra .img-carta{
-    transform: translateZ(40px);
-    transition: transform 0.2s ease;
+.card.flipped .card-inner { transform: rotateY(180deg); }
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%; height: 100%;
+    border-radius: 15px;
+    backface-visibility: hidden;
+    overflow: hidden;
 }
 
-.card.maestra:hover .img-carta{
-    transform: translateZ(70px) scale(1.05);
-}
+.card-front { background: #111; display: flex; justify-content: center; align-items: center; font-size: 40px; border: 1px solid #333; }
+.card-back { background: #222; transform: rotateY(180deg); display: flex; flex-direction: column; }
 
-.card.maestra .rareza-label{
-    transform: translateZ(20px);
-}
+.img-carta { width: 100%; height: 82%; object-fit: cover; }
+.rareza-label { background: black; font-size: 12px; padding: 5px; font-weight: bold; }
 
-/* =========================
-PARTICULAS MAGICAS
-========================= */
+/* Rarezas */
+.card.normal { box-shadow: 0 0 10px gray; }
+.card.especial { box-shadow: 0 0 15px cyan; }
+.card.raro { box-shadow: 0 0 20px blue; }
+.card.legendaria { box-shadow: 0 0 25px gold; }
+.card.maestra { box-shadow: 0 0 30px white; }
+.card.dios { box-shadow: 0 0 40px red; }
 
-/* EL ARREGLO DEFINITIVO DE CLICS */
-
-/* 1. Todo lo que es fondo (Ojos, partículas, galaxia) se va atrás */
-#ojosOscuros, #particulas, .particula, .ojo-oscuro {
-    z-index: -1 !important;
-    pointer-events: none !important;
-}
-
-/* 2. Las pantallas principales se quedan en medio */
-#inicio, #sobre, #grimorio {
-    position: relative;
-    z-index: 5 !important;
-}
-
-/* 3. Botones y Monedas SIEMPRE al frente de todo */
-button, .monedas, #adminPanel, .admin {
-    z-index: 1000 !important;
-    position: relative !important;
-    pointer-events: auto !important;
-    cursor: pointer !important;
-}
-
-/* 4. Asegurar que el botón de 'Volver' en el grimorio sea visible */
-#grimorio button {
-    margin-bottom: 30px; /* Dale espacio abajo para que no se pegue al borde */
-}
-/* Forzamos que los botones SIEMPRE estén al frente y sean clickeables 
-button, .card, .monedas, .admin {
-    position: relative;
-    z-index: 9999 !important; 
-    pointer-events: auto !important;
-}
-#inicio,
-#sobre,
-#grimorio,
-.admin,
-.monedas{
-position:relative;
-z-index:1;
-}*/
-
-.particula{
-position:absolute;
-background: radial-gradient(circle, white 0%, cyan 60%, transparent 100%);
-border-radius:50%;
-opacity:0.8;
-animation: flotar linear infinite;
-}
-
-@keyframes flotar{
-0%{
-transform: translateY(100vh) scale(0.3);
-opacity:0;
-}
-50%{
-opacity:1;
-}
-100%{
-transform: translateY(-10vh) scale(1);
-opacity:0;
-}
-}
-
-.gveret-levin-regular {
-  font-family: "Gveret Levin", cursive;
-  font-weight: 400;
-  font-style: normal;
-}
-
-/* =========================
-OJOS QUE SIGUEN EL MOUSE
-========================= */
-
-.ojos-creepy{
-position: fixed;
-    bottom: 20px;
-    left: 20px;
-    z-index: 200;
-}
-
-.ojo{
-width:60px;
-height:60px;
-background:black;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-box-shadow:0 0 15px red;
-}
-
-.pupila{
-width:20px;
-height:20px;
-background:red;
-border-radius:50%;
-position:relative;
-}
-
-/* =========================
-OJOS OCULTOS
-========================= */
-
-#ojosOscuros {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* El z-index debe ser menor al de tus botones (que pusimos en 10) */
-    z-index: 0; 
-    /* Esto es VITAL: permite que hagas clic en lo que hay detrás */
-    pointer-events: none; 
-}
-
-.ojo-oscuro,
-.ojo{
-position:absolute;
-width:40px;
-height:40px;
-background:black;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-box-shadow:0 0 20px red;
-animation: parpadear 4s infinite;
-}
-
-.pupila-oscura{
-width:12px;
-height:12px;
-background:red;
-border-radius:50%;
-transition:0.1s;
-}
-
-/* PARPADEO */
-
-@keyframes parpadear{
-0%{ transform:scaleY(1); }
-45%{ transform:scaleY(1); }
-50%{ transform:scaleY(0.1); }
-55%{ transform:scaleY(1); }
-100%{ transform:scaleY(1); }
-}
-
-/* =========================
-LIBRO GRIMORIO
-========================= */
-
-.libro{
-position:relative;
-width:90%;
-max-width:1000px;
-margin:auto;
-
-perspective:2500px;
-
-background:
-linear-gradient(90deg,
-rgba(0,0,0,0.8),
-rgba(0,0,0,0.2),
-rgba(0,0,0,0.8));
-
-padding:40px;
-
-border-radius:15px;
-
-box-shadow:
-0 0 60px black,
-inset 0 0 40px black;
-}
-
-/* =========================
-PAGINAS PERGAMINO
-========================= */
-
-.pagina{
-position:absolute;
-width:100%;
-min-height:650px;
-
-background:
-linear-gradient(rgba(245,222,179,0.9), rgba(222,184,135,0.9)),
-url("img/hoja_grimorio.jpg");
-
-background-size:cover;
-background-position:center;
-
-color:black;
-
-border-radius:10px;
-padding:30px;
-
-transform-origin:left;
-transform:rotateY(180deg);
-transition:transform 1s;
-
-box-shadow:
-0 0 40px rgba(0,0,0,0.8),
-inset 0 0 80px rgba(0,0,0,0.5);
-}
-
-.pagina.activa{
-transform:rotateY(0deg);
-z-index:2;
-}
-
-.pagina.volteada{
-transform:rotateY(-180deg);
-z-index:1;
-}
-
-.controles-libro{
-margin-top:30px;
-}
-
-/* =========================
-RESPONSIVE CELULAR
-========================= */
-/* ============================================================
-   CONFIGURACIÓN FINAL UNIFICADA PARA MÓVIL Y TABLET
-   ============================================================ */
-@media (max-width: 1024px) {
-    body, html {
-        overflow: hidden !important;
-        height: 100dvh;
-    }
-
+/* =========================================
+   RESPONSIVE (CELULARES)
+   ========================================= */
+@media (max-width: 768px) {
     #inicio, #sobre, #grimorio {
-        height: 100dvh;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        justify-content: center; /* Centra el contenido verticalmente */
-        align-items: center;
+        justify-content: flex-start; /* Evita que todo se amontone arriba */
+        padding-top: 60px;
     }
 
-    /* CONTENEDOR DE CARTAS: Ajuste para que no se pegue al techo */
     .container {
-        flex: none; /* Cambiado de 1 para evitar que empuje todo */
         width: 95%;
-        max-height: 60vh !important; 
-        overflow-y: auto !important;
-        -webkit-overflow-scrolling: touch;
-        margin: 20px auto !important;
-        padding: 15px !important;
-        background: rgba(0,0,0,0.4);
-        border-radius: 15px;
-        z-index: 10;
+        max-height: 60vh;
+        overflow-y: auto;
+        gap: 10px;
+        padding: 10px;
     }
 
-    /* Cartas más compactas */
     .card {
-        width: 130px !important;
-        height: 190px !important;
+        width: 130px;
+        height: 190px;
     }
 
     button {
-        width: 85% !important;
-        max-width: 350px;
-        padding: 15px !important;
-        margin: 10px auto !important;
-        z-index: 999 !important;
-        position: relative;
+        width: 80%;
+        padding: 14px;
+        font-size: 16px;
     }
 
-    #sobre {
-        padding-top: 20px !important; /* Menos espacio arriba */
-        justify-content: center !important;
-    }
-} /* AQUÍ SE CIERRA EL MEDIA QUERY CORRECTAMENTE */
-    /* Título ajustado */
-    h1 {
-        font-size: 30px !important;
-        margin-bottom: 10px;
-    }
-
-    /* BOTONES: Ahora con z-index alto para que puedas tocarlos */
-    button, .boton-magico {
-        width: 85% !important;
-        max-width: 350px;
-        padding: 18px !important;
-        font-size: 18px !important;
-        display: block;
-        margin: 8px auto !important;
-        position: relative;
-        z-index: 999 !important; /* Por encima de ojos y partículas */
-        pointer-events: auto !important;
-    }
-
-    /* CONTENEDOR DE CARTAS: Solo aquí se permite scroll */
-    .container {
-        max-height: 55vh !important; 
-        overflow-y: auto !important;
-        display: flex !important;
-        flex-wrap: wrap !important;
-        gap: 12px !important;
-        padding: 15px !important;
-        background: rgba(0,0,0,0.3);
-        border-radius: 15px;
-        margin: 5px auto !important;
-        z-index: 10;
-    }
-
-    /* Cartas más compactas para que no hagan scroll infinito */
-    .card {
-        width: 130px !important;
-        height: 190px !important;
-    }
-
-    .monedas {
-        font-size: 20px !important;
-        background: rgba(0,0,0,0.8);
-        padding: 8px 12px;
-    }
-#sobre {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start !important;
-        padding-top: 80px !important; 
-        gap: 15px !important;
-        min-height: 100dvh;
-    }
-
-    #sobre button {
-       position: relative;
-    z-index: 9999 !important; /* Lo pone por encima de todo */
-    pointer-events: auto !important; /* Fuerza a que reciba el clic */
-    }
-} /* <--- AQUÍ ESTABA EL ERROR: Faltaba esta llave en tu código */
-
-/* Ajustes extra para celulares muy pequeños */
-@media (max-width: 400px) {
-    .card {
-        width: 115px !important;
-        height: 170px !important;
-    }
-    
-    h1 { font-size: 24px !important; }
-
-    button {
-        font-size: 16px !important;
-        padding: 14px !important;
-    }
+    h1 { font-size: 28px; }
 }
 
-/* Forzar que la pantalla activa siempre esté arriba */
-#inicio:not(.hidden), 
-#sobre:not(.hidden), 
-#grimorio:not(.hidden) {
-    display: flex !important;
-    z-index: 50; /* Por debajo de los botones pero por encima de los ojos de fondo */
-    position: relative;
+/* Animación Galaxia */
+@keyframes moverGalaxia {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 100% 100%; }
 }
 
-/* Evitar que el contenedor de cartas del sobre bloquee clics */
-#cartasContainer {
-    pointer-events: auto !important;
-    min-height: 200px;
+/* Visor de carta grande */
+.visor {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
 }
+.visor.activo { display: flex; }
+.visor img { max-width: 90%; max-height: 80%; border-radius: 15px; box-shadow: 0 0 50px gold; }
