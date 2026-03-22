@@ -27,9 +27,9 @@ body::-webkit-scrollbar { width: 8px; }
 body::-webkit-scrollbar-thumb { background: #7a00ff; border-radius: 10px; }
 
 h1 {
-    font-size: clamp(30px, 8vw, 55px);
-    text-shadow: 0 0 25px purple;
-    margin: 20px 0;
+    font-size: 2.5rem; /* Títulos más imponentes */
+    margin-bottom: 30px;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
 }
 
 /* =========================================
@@ -110,8 +110,9 @@ button:active { transform: scale(0.95); }
    CARTAS Y ANIMACIONES
    ========================================= */
 .card {
-    width: 160px;
-    height: 230px;
+    width: 180px;  /* Antes quizás tenías 140px o 150px */
+    height: 260px; /* Proporción 1.44 para que se vean estilizadas */
+    margin: 15px;
     perspective: 1000px;
 }
 
@@ -149,7 +150,7 @@ button:active { transform: scale(0.95); }
 /* =========================================
    RESPONSIVE (CELULARES)
    ========================================= */
-@media (max-width: 768px) {
+@media (max-width: 480px) {
     #inicio, #sobre, #grimorio {
         justify-content: flex-start; /* Evita que todo se amontone arriba */
         padding-top: 60px;
@@ -159,13 +160,14 @@ button:active { transform: scale(0.95); }
         width: 95%;
         max-height: 60vh;
         overflow-y: auto;
-        gap: 10px;
+        gap: 15px;
         padding: 10px;
     }
 
     .card {
-        width: 130px;
-        height: 190px;
+       width: 160px; 
+        height: 230px;
+        margin: 10px 5px;
     }
 
     button {
