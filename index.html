@@ -30,11 +30,11 @@
 <div id="inicio">
       <h1>📖 ᎶᏒᛨᛗᛜᏒᛨᛜ ᚹᏒᛜꖾᛨƂᛨDᛜ 👻</h1>
 
-      <button class="boton-magico" onclick="abrirSobre()">
+     <button class="boton-magico" onclick="event.stopPropagation(); abrirSobre()">
            <span>Abrir Sobre (10 💰)</span>
       </button>
 
-      <button class="boton-magico" onclick="verGrimorio()">
+      <button class="boton-magico" onclick="event.stopPropagation(); verGrimorio()">
            <span>Ver Grimorio</span>
       </button>
 
@@ -52,11 +52,11 @@
 
 <div class="container" id="cartasContainer"></div>
 
-<button class="boton-magico" onclick="abrirSobre()">
+<button class="boton-magico" onclick="event.stopPropagation(); abrirSobre()">
 <span>Abrir otro sobre</span>
 </button>
 
-<button class="boton-magico" onclick="volverInicio()">
+<button class="boton-magico" onclick="event.stopPropagation(); volverInicio()">
 <span>Volver</span>
 </button>
 </div>
@@ -85,10 +85,10 @@
 </div>
 
 <!-- PANEL ADMIN -->
-<div id="adminPanel" class="hidden admin">
+<!--div id="adminPanel" class="hidden admin">
 <button onclick="reiniciarTodo()">Reset</button>
 <button onclick="salirAdmin()">Salir Admin</button>
-</div>
+</div-->
 
 <script src="script.js"></script>
 
