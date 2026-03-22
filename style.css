@@ -386,36 +386,32 @@ animation: fondoRojoDios 0.6s ease;
 PARTICULAS MAGICAS
 ========================= */
 
-/* 1. Mandamos todo lo decorativo al fondo absoluto */
-#particulas, 
-#ojosOscuros, 
-.ojos-creepy,
-.ojo-oscuro {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* CRÍTICO: Esto hace que el clic "atraviese" los ojos y partículas */
-    pointer-events: none !important; 
-    z-index: -10 !important; 
+/* EL ARREGLO DEFINITIVO DE CLICS */
+
+/* 1. Todo lo que es fondo (Ojos, partículas, galaxia) se va atrás */
+#ojosOscuros, #particulas, .particula, .ojo-oscuro {
+    z-index: -1 !important;
+    pointer-events: none !important;
 }
 
-/* 2. Forzamos que los botones y paneles estén SIEMPRE al frente */
-#inicio, #sobre, #grimorio, #adminPanel, .admin, .monedas {
+/* 2. Las pantallas principales se quedan en medio */
+#inicio, #sobre, #grimorio {
     position: relative;
-    z-index: 999 !important;
-    pointer-events: auto !important;
+    z-index: 5 !important;
 }
 
-/* 3. Aseguramos que los botones sean clickeables */
-button {
-    position: relative;
+/* 3. Botones y Monedas SIEMPRE al frente de todo */
+button, .monedas, #adminPanel, .admin {
     z-index: 1000 !important;
+    position: relative !important;
     pointer-events: auto !important;
     cursor: pointer !important;
 }
 
+/* 4. Asegurar que el botón de 'Volver' en el grimorio sea visible */
+#grimorio button {
+    margin-bottom: 30px; /* Dale espacio abajo para que no se pegue al borde */
+}
 /* Forzamos que los botones SIEMPRE estén al frente y sean clickeables 
 button, .card, .monedas, .admin {
     position: relative;
