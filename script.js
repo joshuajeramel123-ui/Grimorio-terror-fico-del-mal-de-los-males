@@ -180,22 +180,16 @@ guardar();
 
 /*====================== Abrir sobre =============*/
 function abrirSobre(){
-    
     //if(document.getElementById("grimorio").classList.contains("hidden") === false){
       //  return; // ❌ Evita abrir sobres dentro del grimorio
     document.getElementById("inicio").classList.add("hidden");
     document.getElementById("grimorio").classList.add("hidden");
-    
-
     let pantallaSobre = document.getElementById("sobre"); // ✅ SOLO UNA VEZ
     pantallaSobre.classList.remove("hidden");
     pantallaSobre.style.display = "flex";
-
     console.log("Intentando abrir sobre. Monedas actuales:", monedas);
-
     document.body.classList.remove("con-scroll");
     window.scrollTo({top: 0, left: 0, behavior: "instant"});
-
     if(!adminActivo){
         if(monedas < 10) return alert("No tienes suficientes monedas");
         monedas -= 10;
@@ -417,6 +411,8 @@ actualizarContador();
 }
 
 function volverInicio(){   /*====================volver inicio=====================================*/
+    const ojos = document.getElementById("ojosOscuros");
+    if(ojos) ojos.style.display = "none";
 // 1. Quitamos el scroll para el menú principal
     document.body.classList.remove("con-scroll");
     window.scrollTo({top: 0, left: 0, behavior: "instant"});
@@ -607,31 +603,35 @@ pupil.style.transform = `translate(${moveX}px, ${moveY}px)`;
 });
 
 // ==========================
-// CREAR OJOS ESCONDIDOS
+// CREAR OJOS ESCONDIDOS (CORREGIDO)
 // ==========================
-
 window.addEventListener("load", function(){
+    const contenedor = document.getElementById("ojosOscuros");
+    if(!contenedor) return;
 
-const contenedor = document.getElementById("ojosOscuros");
+    // Limpiamos por si acaso para no duplicar
+    contenedor.innerHTML = "";
 
-for(let i=0;i<10;i++){
+    for(let i=0; i<10; i++){
+        let ojo = document.createElement("div");
+        ojo.className = "ojo-oscuro";
+        
+        // --- ESTO ES LO NUEVO PARA ARREGLAR TU ERROR ---
+        ojo.style.zIndex = "-1"; 
+        ojo.style.pointerEvents = "none"; 
+        // -----------------------------------------------
 
-let ojo = document.createElement("div");
-ojo.className="ojo-oscuro";
-ojo.style.animationDelay = Math.random() * 4 + "s";
-ojo.style.top = Math.random()*90 + "vh";
-ojo.style.left = Math.random()*90 + "vw";
+        ojo.style.animationDelay = Math.random() * 4 + "s";
+        ojo.style.top = Math.random() * 90 + "vh";
+        ojo.style.left = Math.random() * 90 + "vw";
 
-let pupila = document.createElement("div");
-pupila.className="pupila-oscura";
+        let pupila = document.createElement("div");
+        pupila.className = "pupila-oscura";
 
-ojo.appendChild(pupila);
-contenedor.appendChild(ojo);
-
-}
-
+        ojo.appendChild(pupila);
+        contenedor.appendChild(ojo);
+    }
 });
-
 
 // ==========================
 // ABRIR SOBRE DESLIZANDO
