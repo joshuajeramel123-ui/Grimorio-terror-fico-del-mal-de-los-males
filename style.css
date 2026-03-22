@@ -33,25 +33,36 @@ h1 {
 }
 
 /* =========================================
-   SISTEMA DE CAPAS (Z-INDEX) - EL ARREGLO
+   SISTEMA DE CAPAS (Z-INDEX) - CORREGIDO
    ========================================= */
-#ojosOscuros, #particulas, .particula, .ojo-oscuro {
+#ojosOscuros, #particulas {
     position: fixed !important;
-    top: 0; left: 0; width: 100%; height: 100%;
-    z-index: -1 !important; /* Siempre al fondo */
+    top: 0; 
+    left: 0; 
+    width: 100vw; 
+    height: 100vh;
+    z-index: 1 !important; /* Ahora están justo encima del fondo */
     pointer-events: none !important; 
+}
+
+/* Las partículas individuales */
+.particula {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+    animation: caer linear infinite;
+}
+
+@keyframes caer {
+    to { transform: translateY(110vh); }
 }
 
 #inicio, #sobre, #grimorio {
     position: relative;
-    z-index: 10;
-    min-height: 100dvh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    z-index: 10; /* El contenido siempre por encima de los efectos */
 }
-
 .hidden { display: none !important; }
 
 /* =========================================
@@ -197,3 +208,61 @@ button:active { transform: scale(0.95); }
 }
 .visor.activo { display: flex; }
 .visor img { max-width: 90%; max-height: 80%; border-radius: 15px; box-shadow: 0 0 50px gold; }
+
+/* =========================================
+   EFECTO DE OJOS ACECHANTES
+   ========================================= */
+.ojos-creepy {
+    position: fixed;
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    gap: 80px; /* Espacio entre los dos ojos */
+    pointer-events: none;
+    z-index: 2; /* Un poquito por delante de las partículas */
+    opacity: 0.5; /* Para que se vean fantasmales */
+}
+
+.ojo {
+    width: 60px; 
+    height: 60px;
+    background: #eeeeee;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 15px rgba(255,255,255,0.2);
+}
+
+.pupila {
+    width: 25px; 
+    height: 25px;
+    background: #000000;
+    border-radius: 50%;
+    position: relative;
+}
+
+/* Forzar visualización en el grimorio */
+.card.revealed .card-inner {
+    transform: rotateY(180deg) !important;
+}
+
+.card.revealed .card-back {
+    display: flex !important;
+}
+
+/* Ajuste de stack (el número x2, x3 de cartas) */
+.stack {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background: rgba(122, 0, 255, 0.8);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 5px;
+    font-size: 14px;
+    z-index: 5;
+    border: 1px solid white;
+}
